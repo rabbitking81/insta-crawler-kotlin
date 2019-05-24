@@ -1,0 +1,42 @@
+package me.danny.instacrawlerkotlin
+
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
+import org.springframework.web.reactive.function.server.ServerRequest
+import org.springframework.web.reactive.function.server.ServerResponse
+import org.springframework.web.reactive.function.server.ServerResponse.ok
+import org.springframework.web.reactive.function.server.json
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
+
+/**
+ *
+ * Created by danny.ban on 2019-05-24.
+ *
+ * @author danny.ban
+ * @since
+ */
+@Service
+class InstaAccountApiHandler {
+    @Autowired
+    lateinit var instaAccountService: InstaAccountService
+
+    fun findInstaAccount(request: ServerRequest): Mono<ServerResponse> {
+        val account = request.queryParam("account").get()
+        return ok().json().body(instaAccountService.findInstaAccount(account), InstaAccountDto::class.java)
+    }
+
+    fun addInstaAccount(request: ServerRequest): Mono<ServerResponse> {
+        return request.bodyToMono(InstaAccountForm::class.java)
+            .flatMap {
+                instaAccountService.addInstaAccount(it.userName).flatMap {
+                    ok().json().body(Mono.just(it), InstaAccountDto::class.java)
+                }
+            }
+    }
+
+    fun list(request: ServerRequest): Mono<ServerResponse> {
+        return ok().json()
+            .body(instaAccountService.list(), InstaAccountDto::class.java)
+    }
+}
