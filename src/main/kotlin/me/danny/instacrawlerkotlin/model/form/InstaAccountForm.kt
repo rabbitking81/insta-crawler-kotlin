@@ -1,4 +1,4 @@
-package me.danny.instacrawlerkotlin
+package me.danny.instacrawlerkotlin.model.form
 
 /**
  *

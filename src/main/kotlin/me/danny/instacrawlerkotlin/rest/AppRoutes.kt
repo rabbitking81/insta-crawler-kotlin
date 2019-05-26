@@ -1,4 +1,4 @@
-package me.danny.instacrawlerkotlin
+package me.danny.instacrawlerkotlin.rest
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -15,14 +15,16 @@ import org.springframework.web.reactive.function.server.router
 @Configuration
 class AppRoutes {
     @Bean
-    fun apiRouter(apiHandler: InstaAccountApiHandler) = router {
+    fun apiRouter(apiHandler: InstaAccountApiHandler, instaMediaCrawlingApiHandler: InstaMediaCrawlingApiHandler) = router {
         (accept(MediaType.APPLICATION_JSON_UTF8) and "/api").nest {
             "/insta/account".nest {
                 GET("/find", apiHandler::findInstaAccount)
                 POST("/", apiHandler::addInstaAccount)
                 GET("/", apiHandler::list)
-//                GET("/{id}", userApiHandler::getById)
+            }
 
+            "/insta/media".nest {
+                POST("/", instaMediaCrawlingApiHandler::startCrawling)
             }
         }
     }

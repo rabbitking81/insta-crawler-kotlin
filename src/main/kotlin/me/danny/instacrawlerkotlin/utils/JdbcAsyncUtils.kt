@@ -1,4 +1,4 @@
-package me.danny.instacrawlerkotlin
+package me.danny.instacrawlerkotlin.utils
 
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux

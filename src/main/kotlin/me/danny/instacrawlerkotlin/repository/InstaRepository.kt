@@ -1,5 +1,6 @@
-package me.danny.instacrawlerkotlin
+package me.danny.instacrawlerkotlin.repository
 
+import me.danny.instacrawlerkotlin.model.entity.InstaAccount
 import org.springframework.data.jpa.repository.JpaRepository
 
 /**

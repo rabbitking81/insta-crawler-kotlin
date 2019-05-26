@@ -1,5 +1,6 @@
-package me.danny.instacrawlerkotlin
+package me.danny.instacrawlerkotlin.model.entity
 
+import me.danny.instacrawlerkotlin.model.instaAccountToInstaAccountDto
 import java.sql.Timestamp
 import javax.persistence.*
 

@@ -1,4 +1,4 @@
-package me.danny.instacrawlerkotlin
+package me.danny.instacrawlerkotlin.utils
 
 import org.springframework.http.MediaType.APPLICATION_JSON_UTF8
 import org.springframework.web.reactive.function.server.ServerResponse

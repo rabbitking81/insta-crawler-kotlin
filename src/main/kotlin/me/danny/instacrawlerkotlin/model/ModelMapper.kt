@@ -1,5 +1,7 @@
-package me.danny.instacrawlerkotlin
+package me.danny.instacrawlerkotlin.model
 
+import me.danny.instacrawlerkotlin.model.entity.InstaAccount
+import me.danny.instacrawlerkotlin.model.dto.InstaAccountDto
 import kotlin.reflect.KClass
 import kotlin.reflect.KParameter
 import kotlin.reflect.full.memberProperties

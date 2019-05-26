@@ -1,6 +1,8 @@
 create table insta_account
 (
-    id                 bigserial                                       not null,
+    id                 bigserial                                       not null
+        constraint insta_account_pk
+            primary key,
     insta_account_id   bigserial                                       not null,
     insta_account_name varchar(64)                                     not null,
     insta_full_name    varchar(128)                                    not null,
