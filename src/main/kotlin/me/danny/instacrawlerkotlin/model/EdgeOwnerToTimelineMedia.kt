@@ -3,6 +3,7 @@ package me.danny.instacrawlerkotlin.model
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import me.danny.instacrawlerkotlin.model.entity.InstaMedia
+import me.danny.instacrawlerkotlin.model.entity.InstaMediaDetailHistory
 import java.sql.Timestamp
 
 /**
@@ -66,6 +67,10 @@ data class EdgeOwnerToTimelineMedia(
     ) {
         fun toInstaMedia(userId: Long?): InstaMedia {
             return InstaMedia(shortCode = this.shortcode, instaMediaId = this.id, imageUrl = this.displayUrl, instaType = this.__typename, userId = userId, instaCreatedDate = this.takenAtTimestamp)
+        }
+
+        fun toInstaMediaDetailHistory(mediaId: Long): InstaMediaDetailHistory {
+            return InstaMediaDetailHistory(mediaId = mediaId, likeCount = this.edgeMediaPreviewLike.count.toInt(), commentCount = this.edgeMediaToComment.count.toInt(), instaCreatedDate = this.takenAtTimestamp)
         }
 
         data class EdgeMediaToCaption(

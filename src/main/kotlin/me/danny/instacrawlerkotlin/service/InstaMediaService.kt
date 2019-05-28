@@ -4,6 +4,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import me.danny.instacrawlerkotlin.model.EdgeOwnerToTimelineMedia
 import me.danny.instacrawlerkotlin.model.entity.InstaAccount
+import me.danny.instacrawlerkotlin.repository.InstaMediaDetailHistoryRepository
 import me.danny.instacrawlerkotlin.repository.InstaMediaRepository
 import me.danny.instacrawlerkotlin.utils.ILogging
 import me.danny.instacrawlerkotlin.utils.JdbcAsyncUtils
@@ -22,7 +23,7 @@ import reactor.core.scheduler.Schedulers
  * @since
  */
 @Service
-class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaRepository: InstaMediaRepository) : ILogging by LoggingImp<InstaMediaService>() {
+class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaRepository: InstaMediaRepository, val instaMediaDetailHistoryRepository: InstaMediaDetailHistoryRepository) : ILogging by LoggingImp<InstaMediaService>() {
     @Autowired
     lateinit var instaAccountService: InstaAccountService
 
@@ -51,7 +52,9 @@ class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaReposi
                     endCursor = model.pageInfo.endCursor
 
                     for (media in model.edges) {
-                        instaMediaRepository.save(media.node.toInstaMedia(account.id))
+                        val instaMedia = instaMediaRepository.save(media.node.toInstaMedia(account.id))
+                        val mediaDetailHistory = media.node.toInstaMediaDetailHistory(instaMedia.id!!)
+                        instaMediaDetailHistoryRepository.save(mediaDetailHistory)
                     }
                 } while (model.pageInfo.hasNextPage)
 
