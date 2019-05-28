@@ -8,5 +8,5 @@ package me.danny.instacrawlerkotlin.model.form
  * @since
  */
 data class InstaMediaForm(
-    val accountId: Long
+    val userId: Long
 )

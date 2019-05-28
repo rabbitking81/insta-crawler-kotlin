@@ -2,6 +2,7 @@ package me.danny.instacrawlerkotlin.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import me.danny.instacrawlerkotlin.model.entity.InstaMedia
 import java.sql.Timestamp
 
 /**
@@ -26,7 +27,7 @@ data class EdgeOwnerToTimelineMedia(
         val hasNextPage: Boolean,
 
         @JsonProperty("end_cursor")
-        val endCursor: String
+        val endCursor: String?
     )
 
     data class Edge(
@@ -57,9 +58,16 @@ data class EdgeOwnerToTimelineMedia(
         @JsonProperty("is_video")
         val isVideo: Boolean,
 
+        @JsonProperty("display_url")
+        val displayUrl: String,
+
         @JsonProperty("taken_at_timestamp")
         val takenAtTimestamp: Timestamp
     ) {
+        fun toInstaMedia(userId: Long?): InstaMedia {
+            return InstaMedia(shortCode = this.shortcode, instaMediaId = this.id, imageUrl = this.displayUrl, instaType = this.__typename, userId = userId, instaCreatedDate = this.takenAtTimestamp)
+        }
+
         data class EdgeMediaToCaption(
             @JsonProperty("edges")
             val edges: List<SubEdge>

@@ -29,7 +29,7 @@ data class InstaAccount(
     val instaFullName: String,
 
     @Column(name = "status", nullable = false)
-    val status: String,
+    var status: String,
 
     @Column(name = "created_date", nullable = false)
     val createdDate: Timestamp

@@ -1,6 +1,5 @@
 package me.danny.instacrawlerkotlin.model.entity
 
-import me.danny.instacrawlerkotlin.model.instaAccountToInstaAccountDto
 import java.sql.Timestamp
 import javax.persistence.*
 
@@ -22,6 +21,9 @@ data class InstaMedia(
     @Column(name = "short_code", nullable = false)
     val shortCode: String,
 
+    @Column(name = "insta_media_id", nullable = false)
+    val instaMediaId: String,
+
     @Column(name = "image_url", nullable = false)
     val imageUrl: String,
 
@@ -37,6 +39,6 @@ data class InstaMedia(
     @Column(name = "created_date", nullable = false)
     val createdDate: Timestamp
 ) {
-    constructor(shortCode: String, imageUrl: String, instaType: String, userId: Long?, instaCreatedDate: Timestamp) : this(null, shortCode, imageUrl, instaType, userId, instaCreatedDate, Timestamp(System.currentTimeMillis()))
+    constructor(shortCode: String, instaMediaId: String, imageUrl: String, instaType: String, userId: Long?, instaCreatedDate: Timestamp) : this(null, shortCode, instaMediaId, imageUrl, instaType, userId, Timestamp(instaCreatedDate.time * 1000), Timestamp(System.currentTimeMillis()))
 }
 

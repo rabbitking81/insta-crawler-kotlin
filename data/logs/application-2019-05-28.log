@@ -1,0 +1,256 @@
+2019-05-28 12:21:39.795 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] Starting ApplicationKt on dannybanui-MacBook-Pro.local with PID 50272 (/Users/danny.ban/labs/spring/insta-crawler-kotlin/out/production/classes started by danny.ban in /Users/danny.ban/labs/spring/insta-crawler-kotlin)
+2019-05-28 12:21:39.798 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] No active profile set, falling back to default profiles: default
+2019-05-28 12:21:40.988 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m .r.c.RepositoryConfigurationDelegate : [[34m[0;39m] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-05-28 12:21:41.113 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m .r.c.RepositoryConfigurationDelegate : [[34m[0;39m] Finished Spring Data repository scanning in 113ms. Found 3 repository interfaces.
+2019-05-28 12:21:41.675 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m ionDelegate$BeanPostProcessorChecker : [[34m[0;39m] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$855ee79d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-05-28 12:21:41.704 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m ionDelegate$BeanPostProcessorChecker : [[34m[0;39m] Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$4df34cf] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-05-28 12:21:41.924 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m o.s.b.w.e.tomcat.TomcatWebServer     : [[34m[0;39m] Tomcat initialized with port(s): 8080 (http)
+2019-05-28 12:21:41.958 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m o.a.catalina.core.StandardService    : [[34m[0;39m] Starting service [Tomcat]
+2019-05-28 12:21:41.959 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m o.a.catalina.core.StandardEngine     : [[34m[0;39m] Starting Servlet engine: [Apache Tomcat/9.0.19]
+2019-05-28 12:21:42.290 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m o.f.c.i.license.VersionPrinter       : [[34m[0;39m] Flyway Community Edition 5.2.4 by Boxfuse
+2019-05-28 12:21:42.346 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m o.f.c.i.database.DatabaseFactory     : [[34m[0;39m] Database: jdbc:postgresql://localhost:15432/instagram_crawling_db (PostgreSQL 11.2)
+2019-05-28 12:21:42.361 [33mWARN [0;39m [2m50272[0;39m --- [36m[    main][0;39m o.f.c.i.database.base.Database       : [[34m[0;39m] Flyway upgrade recommended: PostgreSQL 11.2 is newer than this version of Flyway and support has not been tested.
+2019-05-28 12:21:42.431 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m o.f.core.internal.command.DbValidate : [[34m[0;39m] Successfully validated 3 migrations (execution time 00:00.036s)
+2019-05-28 12:21:42.453 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m o.f.core.internal.command.DbMigrate  : [[34m[0;39m] Current version of schema "public": 1.0.3
+2019-05-28 12:21:42.455 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m o.f.core.internal.command.DbMigrate  : [[34m[0;39m] Schema "public" is up to date. No migration necessary.
+2019-05-28 12:21:42.531 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Starting...
+2019-05-28 12:21:42.553 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Start completed.
+2019-05-28 12:21:42.591 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m o.h.jpa.internal.util.LogHelper      : [[34m[0;39m] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-05-28 12:21:42.639 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m org.hibernate.Version                : [[34m[0;39m] HHH000412: Hibernate Core {5.3.10.Final}
+2019-05-28 12:21:42.640 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m org.hibernate.cfg.Environment        : [[34m[0;39m] HHH000206: hibernate.properties not found
+2019-05-28 12:21:42.779 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m o.h.annotations.common.Version       : [[34m[0;39m] HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-05-28 12:21:42.902 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m org.hibernate.dialect.Dialect        : [[34m[0;39m] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2019-05-28 12:21:42.918 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m o.h.e.j.e.i.LobCreatorBuilderImpl    : [[34m[0;39m] HHH000422: Disabling contextual LOB creation as connection was null
+2019-05-28 12:21:42.924 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m org.hibernate.type.BasicTypeRegistry : [[34m[0;39m] HHH000270: Type registration [java.util.UUID] overrides previous : org.hibernate.type.UUIDBinaryType@7544ac86
+2019-05-28 12:21:43.407 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m calContainerEntityManagerFactoryBean : [[34m[0;39m] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-05-28 12:21:43.909 [33mWARN [0;39m [2m50272[0;39m --- [36m[    main][0;39m DefaultTemplateResolverConfiguration : [[34m[0;39m] Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-05-28 12:21:44.450 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m o.s.b.w.e.tomcat.TomcatWebServer     : [[34m[0;39m] Tomcat started on port(s): 8080 (http) with context path ''
+2019-05-28 12:21:44.455 [32mINFO [0;39m [2m50272[0;39m --- [36m[    main][0;39m m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] Started ApplicationKt in 5.684 seconds (JVM running for 6.79)
+2019-05-28 12:28:53.876 [32mINFO [0;39m [2m50272[0;39m --- [36m[Thread-15][0;39m calContainerEntityManagerFactoryBean : [[34m[0;39m] Closing JPA EntityManagerFactory for persistence unit 'default'
+2019-05-28 12:28:53.880 [32mINFO [0;39m [2m50272[0;39m --- [36m[Thread-15][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Shutdown initiated...
+2019-05-28 12:28:53.882 [32mINFO [0;39m [2m50272[0;39m --- [36m[Thread-15][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Shutdown completed.
+2019-05-28 12:28:55.830 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] Starting ApplicationKt on dannybanui-MacBook-Pro.local with PID 52112 (/Users/danny.ban/labs/spring/insta-crawler-kotlin/out/production/classes started by danny.ban in /Users/danny.ban/labs/spring/insta-crawler-kotlin)
+2019-05-28 12:28:55.833 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] No active profile set, falling back to default profiles: default
+2019-05-28 12:28:56.515 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m .r.c.RepositoryConfigurationDelegate : [[34m[0;39m] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-05-28 12:28:56.611 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m .r.c.RepositoryConfigurationDelegate : [[34m[0;39m] Finished Spring Data repository scanning in 88ms. Found 3 repository interfaces.
+2019-05-28 12:28:56.966 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m ionDelegate$BeanPostProcessorChecker : [[34m[0;39m] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$ffbadc3a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-05-28 12:28:56.982 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m ionDelegate$BeanPostProcessorChecker : [[34m[0;39m] Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$7f3b296c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-05-28 12:28:57.137 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m o.s.b.w.e.tomcat.TomcatWebServer     : [[34m[0;39m] Tomcat initialized with port(s): 8080 (http)
+2019-05-28 12:28:57.160 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m o.a.catalina.core.StandardService    : [[34m[0;39m] Starting service [Tomcat]
+2019-05-28 12:28:57.160 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m o.a.catalina.core.StandardEngine     : [[34m[0;39m] Starting Servlet engine: [Apache Tomcat/9.0.19]
+2019-05-28 12:28:57.392 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m o.f.c.i.license.VersionPrinter       : [[34m[0;39m] Flyway Community Edition 5.2.4 by Boxfuse
+2019-05-28 12:28:57.432 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m o.f.c.i.database.DatabaseFactory     : [[34m[0;39m] Database: jdbc:postgresql://localhost:15432/instagram_crawling_db (PostgreSQL 11.2)
+2019-05-28 12:28:57.441 [33mWARN [0;39m [2m52112[0;39m --- [36m[    main][0;39m o.f.c.i.database.base.Database       : [[34m[0;39m] Flyway upgrade recommended: PostgreSQL 11.2 is newer than this version of Flyway and support has not been tested.
+2019-05-28 12:28:57.488 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m o.f.core.internal.command.DbValidate : [[34m[0;39m] Successfully validated 3 migrations (execution time 00:00.028s)
+2019-05-28 12:28:57.501 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m o.f.core.internal.command.DbMigrate  : [[34m[0;39m] Current version of schema "public": 1.0.3
+2019-05-28 12:28:57.502 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m o.f.core.internal.command.DbMigrate  : [[34m[0;39m] Schema "public" is up to date. No migration necessary.
+2019-05-28 12:28:57.555 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Starting...
+2019-05-28 12:28:57.571 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Start completed.
+2019-05-28 12:28:57.607 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m o.h.jpa.internal.util.LogHelper      : [[34m[0;39m] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-05-28 12:28:57.648 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m org.hibernate.Version                : [[34m[0;39m] HHH000412: Hibernate Core {5.3.10.Final}
+2019-05-28 12:28:57.649 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m org.hibernate.cfg.Environment        : [[34m[0;39m] HHH000206: hibernate.properties not found
+2019-05-28 12:28:57.736 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m o.h.annotations.common.Version       : [[34m[0;39m] HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-05-28 12:28:57.820 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m org.hibernate.dialect.Dialect        : [[34m[0;39m] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2019-05-28 12:28:57.831 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m o.h.e.j.e.i.LobCreatorBuilderImpl    : [[34m[0;39m] HHH000422: Disabling contextual LOB creation as connection was null
+2019-05-28 12:28:57.836 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m org.hibernate.type.BasicTypeRegistry : [[34m[0;39m] HHH000270: Type registration [java.util.UUID] overrides previous : org.hibernate.type.UUIDBinaryType@6ada9c0c
+2019-05-28 12:28:58.169 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m calContainerEntityManagerFactoryBean : [[34m[0;39m] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-05-28 12:28:58.556 [33mWARN [0;39m [2m52112[0;39m --- [36m[    main][0;39m DefaultTemplateResolverConfiguration : [[34m[0;39m] Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-05-28 12:28:58.864 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m o.s.b.w.e.tomcat.TomcatWebServer     : [[34m[0;39m] Tomcat started on port(s): 8080 (http) with context path ''
+2019-05-28 12:28:58.866 [32mINFO [0;39m [2m52112[0;39m --- [36m[    main][0;39m m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] Started ApplicationKt in 3.449 seconds (JVM running for 3.994)
+2019-05-28 12:29:19.689 [32mINFO [0;39m [2m52112[0;39m --- [36m[Thread-10][0;39m calContainerEntityManagerFactoryBean : [[34m[0;39m] Closing JPA EntityManagerFactory for persistence unit 'default'
+2019-05-28 12:29:19.691 [32mINFO [0;39m [2m52112[0;39m --- [36m[Thread-10][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Shutdown initiated...
+2019-05-28 12:29:19.693 [32mINFO [0;39m [2m52112[0;39m --- [36m[Thread-10][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Shutdown completed.
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] Starting ApplicationKt on dannybanui-MacBook-Pro.local with PID 52231 (/Users/danny.ban/labs/spring/insta-crawler-kotlin/out/production/classes started by danny.ban in /Users/danny.ban/labs/spring/insta-crawler-kotlin)
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] No active profile set, falling back to default profiles: default
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m .r.c.RepositoryConfigurationDelegate : [[34m[0;39m] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m .r.c.RepositoryConfigurationDelegate : [[34m[0;39m] Finished Spring Data repository scanning in 83ms. Found 3 repository interfaces.
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m ionDelegate$BeanPostProcessorChecker : [[34m[0;39m] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$26cbf4e5] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m ionDelegate$BeanPostProcessorChecker : [[34m[0;39m] Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$a64c4217] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m o.s.b.w.e.tomcat.TomcatWebServer     : [[34m[0;39m] Tomcat initialized with port(s): 8080 (http)
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m o.a.catalina.core.StandardService    : [[34m[0;39m] Starting service [Tomcat]
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m o.a.catalina.core.StandardEngine     : [[34m[0;39m] Starting Servlet engine: [Apache Tomcat/9.0.19]
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m o.f.c.i.license.VersionPrinter       : [[34m[0;39m] Flyway Community Edition 5.2.4 by Boxfuse
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m o.f.c.i.database.DatabaseFactory     : [[34m[0;39m] Database: jdbc:postgresql://localhost:15432/instagram_crawling_db (PostgreSQL 11.2)
+2019-05-28 12:29 [33mWARN [0;39m [2m52231[0;39m --- [36m[    main][0;39m o.f.c.i.database.base.Database       : [[34m[0;39m] Flyway upgrade recommended: PostgreSQL 11.2 is newer than this version of Flyway and support has not been tested.
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m o.f.core.internal.command.DbValidate : [[34m[0;39m] Successfully validated 3 migrations (execution time 00:00.018s)
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m o.f.core.internal.command.DbMigrate  : [[34m[0;39m] Current version of schema "public": 1.0.3
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m o.f.core.internal.command.DbMigrate  : [[34m[0;39m] Schema "public" is up to date. No migration necessary.
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Starting...
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Start completed.
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m o.h.jpa.internal.util.LogHelper      : [[34m[0;39m] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m org.hibernate.Version                : [[34m[0;39m] HHH000412: Hibernate Core {5.3.10.Final}
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m org.hibernate.cfg.Environment        : [[34m[0;39m] HHH000206: hibernate.properties not found
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m o.h.annotations.common.Version       : [[34m[0;39m] HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m org.hibernate.dialect.Dialect        : [[34m[0;39m] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m o.h.e.j.e.i.LobCreatorBuilderImpl    : [[34m[0;39m] HHH000422: Disabling contextual LOB creation as connection was null
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m org.hibernate.type.BasicTypeRegistry : [[34m[0;39m] HHH000270: Type registration [java.util.UUID] overrides previous : org.hibernate.type.UUIDBinaryType@29a98d9f
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m calContainerEntityManagerFactoryBean : [[34m[0;39m] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-05-28 12:29 [33mWARN [0;39m [2m52231[0;39m --- [36m[    main][0;39m DefaultTemplateResolverConfiguration : [[34m[0;39m] Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m o.s.b.w.e.tomcat.TomcatWebServer     : [[34m[0;39m] Tomcat started on port(s): 8080 (http) with context path ''
+2019-05-28 12:29 [32mINFO [0;39m [2m52231[0;39m --- [36m[    main][0;39m m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] Started ApplicationKt in 3.418 seconds (JVM running for 3.972)
+2019-05-28 12:37 [32mINFO [0;39m [2m52231[0;39m --- [36m[Thread-10][0;39m calContainerEntityManagerFactoryBean : [[34m[0;39m] Closing JPA EntityManagerFactory for persistence unit 'default'
+2019-05-28 12:37 [32mINFO [0;39m [2m52231[0;39m --- [36m[Thread-10][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Shutdown initiated...
+2019-05-28 12:37 [32mINFO [0;39m [2m52231[0;39m --- [36m[Thread-10][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Shutdown completed.
+2019-05-28 12:37:12.000 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] Starting ApplicationKt on dannybanui-MacBook-Pro.local with PID 54220 (/Users/danny.ban/labs/spring/insta-crawler-kotlin/out/production/classes started by danny.ban in /Users/danny.ban/labs/spring/insta-crawler-kotlin)
+2019-05-28 12:37:12.003 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] No active profile set, falling back to default profiles: default
+2019-05-28 12:37:12.649 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m .r.c.RepositoryConfigurationDelegate : [[34m[0;39m] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-05-28 12:37:12.714 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m .r.c.RepositoryConfigurationDelegate : [[34m[0;39m] Finished Spring Data repository scanning in 59ms. Found 3 repository interfaces.
+2019-05-28 12:37:12.954 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m ionDelegate$BeanPostProcessorChecker : [[34m[0;39m] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$84187f5d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-05-28 12:37:12.968 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m ionDelegate$BeanPostProcessorChecker : [[34m[0;39m] Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$398cc8f] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-05-28 12:37:13.084 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m o.s.b.w.e.tomcat.TomcatWebServer     : [[34m[0;39m] Tomcat initialized with port(s): 8080 (http)
+2019-05-28 12:37:13.100 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m o.a.catalina.core.StandardService    : [[34m[0;39m] Starting service [Tomcat]
+2019-05-28 12:37:13.101 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m o.a.catalina.core.StandardEngine     : [[34m[0;39m] Starting Servlet engine: [Apache Tomcat/9.0.19]
+2019-05-28 12:37:13.301 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m o.f.c.i.license.VersionPrinter       : [[34m[0;39m] Flyway Community Edition 5.2.4 by Boxfuse
+2019-05-28 12:37:13.338 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m o.f.c.i.database.DatabaseFactory     : [[34m[0;39m] Database: jdbc:postgresql://localhost:15432/instagram_crawling_db (PostgreSQL 11.2)
+2019-05-28 12:37:13.347 [33mWARN [0;39m [2m54220[0;39m --- [36m[    main][0;39m o.f.c.i.database.base.Database       : [[34m[0;39m] Flyway upgrade recommended: PostgreSQL 11.2 is newer than this version of Flyway and support has not been tested.
+2019-05-28 12:37:13.384 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m o.f.core.internal.command.DbValidate : [[34m[0;39m] Successfully validated 3 migrations (execution time 00:00.019s)
+2019-05-28 12:37:13.397 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m o.f.core.internal.command.DbMigrate  : [[34m[0;39m] Current version of schema "public": 1.0.3
+2019-05-28 12:37:13.398 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m o.f.core.internal.command.DbMigrate  : [[34m[0;39m] Schema "public" is up to date. No migration necessary.
+2019-05-28 12:37:13.444 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Starting...
+2019-05-28 12:37:13.460 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Start completed.
+2019-05-28 12:37:13.494 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m o.h.jpa.internal.util.LogHelper      : [[34m[0;39m] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-05-28 12:37:13.534 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m org.hibernate.Version                : [[34m[0;39m] HHH000412: Hibernate Core {5.3.10.Final}
+2019-05-28 12:37:13.535 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m org.hibernate.cfg.Environment        : [[34m[0;39m] HHH000206: hibernate.properties not found
+2019-05-28 12:37:13.634 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m o.h.annotations.common.Version       : [[34m[0;39m] HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-05-28 12:37:13.724 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m org.hibernate.dialect.Dialect        : [[34m[0;39m] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2019-05-28 12:37:13.735 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m o.h.e.j.e.i.LobCreatorBuilderImpl    : [[34m[0;39m] HHH000422: Disabling contextual LOB creation as connection was null
+2019-05-28 12:37:13.740 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m org.hibernate.type.BasicTypeRegistry : [[34m[0;39m] HHH000270: Type registration [java.util.UUID] overrides previous : org.hibernate.type.UUIDBinaryType@5793b87
+2019-05-28 12:37:14.077 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m calContainerEntityManagerFactoryBean : [[34m[0;39m] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-05-28 12:37:14.458 [33mWARN [0;39m [2m54220[0;39m --- [36m[    main][0;39m DefaultTemplateResolverConfiguration : [[34m[0;39m] Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-05-28 12:37:14.780 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m o.s.b.w.e.tomcat.TomcatWebServer     : [[34m[0;39m] Tomcat started on port(s): 8080 (http) with context path ''
+2019-05-28 12:37:14.782 [32mINFO [0;39m [2m54220[0;39m --- [36m[    main][0;39m m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] Started ApplicationKt in 3.233 seconds (JVM running for 4.247)
+2019-05-28 12:38:25.018 [32mINFO [0;39m [2m54220[0;39m --- [36m[pool-1-thread-1][0;39m .h.i.QueryTranslatorFactoryInitiator : [[34m[0;39m] HHH000397: Using ASTQueryTranslatorFactory
+2019-05-28 12:39:13.771 [32mINFO [0;39m [2m54220[0;39m --- [36m[Thread-11][0;39m calContainerEntityManagerFactoryBean : [[34m[0;39m] Closing JPA EntityManagerFactory for persistence unit 'default'
+2019-05-28 12:39:13.773 [32mINFO [0;39m [2m54220[0;39m --- [36m[Thread-11][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Shutdown initiated...
+2019-05-28 12:39:13.775 [32mINFO [0;39m [2m54220[0;39m --- [36m[Thread-11][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Shutdown completed.
+2019-05-28 12:39:17.606 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] Starting ApplicationKt on dannybanui-MacBook-Pro.local with PID 54749 (/Users/danny.ban/labs/spring/insta-crawler-kotlin/out/production/classes started by danny.ban in /Users/danny.ban/labs/spring/insta-crawler-kotlin)
+2019-05-28 12:39:17.609 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] No active profile set, falling back to default profiles: default
+2019-05-28 12:39:18.321 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m .r.c.RepositoryConfigurationDelegate : [[34m[0;39m] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-05-28 12:39:18.398 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m .r.c.RepositoryConfigurationDelegate : [[34m[0;39m] Finished Spring Data repository scanning in 70ms. Found 3 repository interfaces.
+2019-05-28 12:39:18.661 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m ionDelegate$BeanPostProcessorChecker : [[34m[0;39m] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$4b6c7c44] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-05-28 12:39:18.675 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m ionDelegate$BeanPostProcessorChecker : [[34m[0;39m] Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$caecc976] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-05-28 12:39:18.794 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m o.s.b.w.e.tomcat.TomcatWebServer     : [[34m[0;39m] Tomcat initialized with port(s): 8080 (http)
+2019-05-28 12:39:18.811 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m o.a.catalina.core.StandardService    : [[34m[0;39m] Starting service [Tomcat]
+2019-05-28 12:39:18.811 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m o.a.catalina.core.StandardEngine     : [[34m[0;39m] Starting Servlet engine: [Apache Tomcat/9.0.19]
+2019-05-28 12:39:19.018 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m o.f.c.i.license.VersionPrinter       : [[34m[0;39m] Flyway Community Edition 5.2.4 by Boxfuse
+2019-05-28 12:39:19.057 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m o.f.c.i.database.DatabaseFactory     : [[34m[0;39m] Database: jdbc:postgresql://localhost:15432/instagram_crawling_db (PostgreSQL 11.2)
+2019-05-28 12:39:19.067 [33mWARN [0;39m [2m54749[0;39m --- [36m[    main][0;39m o.f.c.i.database.base.Database       : [[34m[0;39m] Flyway upgrade recommended: PostgreSQL 11.2 is newer than this version of Flyway and support has not been tested.
+2019-05-28 12:39:19.104 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m o.f.core.internal.command.DbValidate : [[34m[0;39m] Successfully validated 3 migrations (execution time 00:00.019s)
+2019-05-28 12:39:19.116 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m o.f.core.internal.command.DbMigrate  : [[34m[0;39m] Current version of schema "public": 1.0.3
+2019-05-28 12:39:19.118 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m o.f.core.internal.command.DbMigrate  : [[34m[0;39m] Schema "public" is up to date. No migration necessary.
+2019-05-28 12:39:19.164 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Starting...
+2019-05-28 12:39:19.179 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Start completed.
+2019-05-28 12:39:19.212 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m o.h.jpa.internal.util.LogHelper      : [[34m[0;39m] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-05-28 12:39:19.251 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m org.hibernate.Version                : [[34m[0;39m] HHH000412: Hibernate Core {5.3.10.Final}
+2019-05-28 12:39:19.252 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m org.hibernate.cfg.Environment        : [[34m[0;39m] HHH000206: hibernate.properties not found
+2019-05-28 12:39:19.355 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m o.h.annotations.common.Version       : [[34m[0;39m] HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-05-28 12:39:19.450 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m org.hibernate.dialect.Dialect        : [[34m[0;39m] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2019-05-28 12:39:19.467 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m o.h.e.j.e.i.LobCreatorBuilderImpl    : [[34m[0;39m] HHH000422: Disabling contextual LOB creation as connection was null
+2019-05-28 12:39:19.472 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m org.hibernate.type.BasicTypeRegistry : [[34m[0;39m] HHH000270: Type registration [java.util.UUID] overrides previous : org.hibernate.type.UUIDBinaryType@5d497a91
+2019-05-28 12:39:19.824 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m calContainerEntityManagerFactoryBean : [[34m[0;39m] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-05-28 12:39:20.225 [33mWARN [0;39m [2m54749[0;39m --- [36m[    main][0;39m DefaultTemplateResolverConfiguration : [[34m[0;39m] Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-05-28 12:39:20.564 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m o.s.b.w.e.tomcat.TomcatWebServer     : [[34m[0;39m] Tomcat started on port(s): 8080 (http) with context path ''
+2019-05-28 12:39:20.566 [32mINFO [0;39m [2m54749[0;39m --- [36m[    main][0;39m m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] Started ApplicationKt in 3.406 seconds (JVM running for 4.265)
+2019-05-28 12:39:23.602 [32mINFO [0;39m [2m54749[0;39m --- [36m[pool-1-thread-1][0;39m .h.i.QueryTranslatorFactoryInitiator : [[34m[0;39m] HHH000397: Using ASTQueryTranslatorFactory
+2019-05-28 12:42:07.496 [32mINFO [0;39m [2m54749[0;39m --- [36m[Thread-11][0;39m calContainerEntityManagerFactoryBean : [[34m[0;39m] Closing JPA EntityManagerFactory for persistence unit 'default'
+2019-05-28 12:42:07.498 [32mINFO [0;39m [2m54749[0;39m --- [36m[Thread-11][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Shutdown initiated...
+2019-05-28 12:42:07.501 [32mINFO [0;39m [2m54749[0;39m --- [36m[Thread-11][0;39m com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Shutdown completed.
+a 2019-05-28 12:42:09.792 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] Starting ApplicationKt on dannybanui-MacBook-Pro.local with PID 55464 (/Users/danny.ban/labs/spring/insta-crawler-kotlin/out/production/classes started by danny.ban in /Users/danny.ban/labs/spring/insta-crawler-kotlin)
+a 2019-05-28 12:42:09.795 [32mDEBUG[0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] Running with Spring Boot v2.1.5.RELEASE, Spring v5.1.7.RELEASE
+a 2019-05-28 12:42:09.796 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] No active profile set, falling back to default profiles: default
+a 2019-05-28 12:42:10.501 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                .r.c.RepositoryConfigurationDelegate : [[34m[0;39m] Bootstrapping Spring Data repositories in DEFAULT mode.
+a 2019-05-28 12:42:10.585 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                .r.c.RepositoryConfigurationDelegate : [[34m[0;39m] Finished Spring Data repository scanning in 75ms. Found 3 repository interfaces.
+a 2019-05-28 12:42:10.855 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                ionDelegate$BeanPostProcessorChecker : [[34m[0;39m] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$c7a7b602] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+a 2019-05-28 12:42:10.869 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                ionDelegate$BeanPostProcessorChecker : [[34m[0;39m] Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$47280334] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+a 2019-05-28 12:42:10.986 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                o.s.b.w.e.tomcat.TomcatWebServer     : [[34m[0;39m] Tomcat initialized with port(s): 8080 (http)
+a 2019-05-28 12:42:11.004 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                o.a.catalina.core.StandardService    : [[34m[0;39m] Starting service [Tomcat]
+a 2019-05-28 12:42:11.005 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                o.a.catalina.core.StandardEngine     : [[34m[0;39m] Starting Servlet engine: [Apache Tomcat/9.0.19]
+a 2019-05-28 12:42:11.221 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                o.f.c.i.license.VersionPrinter       : [[34m[0;39m] Flyway Community Edition 5.2.4 by Boxfuse
+a 2019-05-28 12:42:11.258 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                o.f.c.i.database.DatabaseFactory     : [[34m[0;39m] Database: jdbc:postgresql://localhost:15432/instagram_crawling_db (PostgreSQL 11.2)
+a 2019-05-28 12:42:11.267 [33mWARN [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                o.f.c.i.database.base.Database       : [[34m[0;39m] Flyway upgrade recommended: PostgreSQL 11.2 is newer than this version of Flyway and support has not been tested.
+a 2019-05-28 12:42:11.304 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                o.f.core.internal.command.DbValidate : [[34m[0;39m] Successfully validated 3 migrations (execution time 00:00.018s)
+a 2019-05-28 12:42:11.318 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                o.f.core.internal.command.DbMigrate  : [[34m[0;39m] Current version of schema "public": 1.0.3
+a 2019-05-28 12:42:11.319 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                o.f.core.internal.command.DbMigrate  : [[34m[0;39m] Schema "public" is up to date. No migration necessary.
+a 2019-05-28 12:42:11.367 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Starting...
+a 2019-05-28 12:42:11.383 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Start completed.
+a 2019-05-28 12:42:11.420 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                o.h.jpa.internal.util.LogHelper      : [[34m[0;39m] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+a 2019-05-28 12:42:11.464 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                org.hibernate.Version                : [[34m[0;39m] HHH000412: Hibernate Core {5.3.10.Final}
+a 2019-05-28 12:42:11.465 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                org.hibernate.cfg.Environment        : [[34m[0;39m] HHH000206: hibernate.properties not found
+a 2019-05-28 12:42:11.562 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                o.h.annotations.common.Version       : [[34m[0;39m] HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+a 2019-05-28 12:42:11.647 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                org.hibernate.dialect.Dialect        : [[34m[0;39m] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+a 2019-05-28 12:42:11.658 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                o.h.e.j.e.i.LobCreatorBuilderImpl    : [[34m[0;39m] HHH000422: Disabling contextual LOB creation as connection was null
+a 2019-05-28 12:42:11.664 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                org.hibernate.type.BasicTypeRegistry : [[34m[0;39m] HHH000270: Type registration [java.util.UUID] overrides previous : org.hibernate.type.UUIDBinaryType@352ed70d
+a 2019-05-28 12:42:12.006 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                calContainerEntityManagerFactoryBean : [[34m[0;39m] Initialized JPA EntityManagerFactory for persistence unit 'default'
+a 2019-05-28 12:42:12.403 [33mWARN [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                DefaultTemplateResolverConfiguration : [[34m[0;39m] Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+a 2019-05-28 12:42:12.732 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                o.s.b.w.e.tomcat.TomcatWebServer     : [[34m[0;39m] Tomcat started on port(s): 8080 (http) with context path ''
+a 2019-05-28 12:42:12.734 [32mINFO [0;39m [2m55464[0;39m --- [36m[    main][0;39m
+                m.d.instacrawlerkotlin.ApplicationKt : [[34m[0;39m] Started ApplicationKt in 3.459 seconds (JVM running for 4.238)
+a 2019-05-28 12:44:52.068 [32mINFO [0;39m [2m55464[0;39m --- [36m[Thread-11][0;39m
+                calContainerEntityManagerFactoryBean : [[34m[0;39m] Closing JPA EntityManagerFactory for persistence unit 'default'
+a 2019-05-28 12:44:52.071 [32mINFO [0;39m [2m55464[0;39m --- [36m[Thread-11][0;39m
+                com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Shutdown initiated...
+a 2019-05-28 12:44:52.072 [32mINFO [0;39m [2m55464[0;39m --- [36m[Thread-11][0;39m
+                com.zaxxer.hikari.HikariDataSource   : [[34m[0;39m] HikariPool-1 - Shutdown completed.
+a 2019-05-28 12:44:54.672 [31mERROR[0;39m [2m56150[0;39m --- [36m[    main][0;39m
+                o.s.boot.SpringApplication           : [[34m[0;39m] Application run failed
+java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [appAppender]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:169)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:82)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:117)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:292)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:265)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:228)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:201)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:127)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:75)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:54)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:347)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:306)
+	at org.springframework.boot.builder.SpringApplicationBuilder.run(SpringApplicationBuilder.java:139)
+	at me.danny.instacrawlerkotlin.ApplicationKt.main(Application.kt:14)

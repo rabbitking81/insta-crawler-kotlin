@@ -1,10 +1,7 @@
 package me.danny.instacrawlerkotlin.rest
 
-import me.danny.instacrawlerkotlin.model.EdgeOwnerToTimelineMedia
-import me.danny.instacrawlerkotlin.model.dto.InstaAccountDto
-import me.danny.instacrawlerkotlin.model.form.InstaAccountForm
+import me.danny.instacrawlerkotlin.model.entity.InstaAccount
 import me.danny.instacrawlerkotlin.model.form.InstaMediaForm
-import me.danny.instacrawlerkotlin.service.InstaAccountService
 import me.danny.instacrawlerkotlin.service.InstaMediaService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -29,7 +26,7 @@ class InstaMediaCrawlingApiHandler {
     fun startCrawling(request: ServerRequest): Mono<ServerResponse> {
         return request.bodyToMono(InstaMediaForm::class.java)
             .flatMap {
-                ok().json().body(instaMediaService.crawlingMediaByUser(it.accountId), EdgeOwnerToTimelineMedia::class.java)
+                ok().json().body(instaMediaService.crawlingMediaByUser(it.userId), InstaAccount::class.java)
             }
     }
 }

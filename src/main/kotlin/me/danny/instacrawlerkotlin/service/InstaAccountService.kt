@@ -1,12 +1,14 @@
 package me.danny.instacrawlerkotlin.service
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import me.danny.instacrawlerkotlin.model.entity.InstaAccount
 import me.danny.instacrawlerkotlin.model.dto.InstaAccountDto
+import me.danny.instacrawlerkotlin.model.entity.InstaAccount
 import me.danny.instacrawlerkotlin.model.entity.InstaAccountDetailHistory
 import me.danny.instacrawlerkotlin.repository.InstaAccountDetailRepository
 import me.danny.instacrawlerkotlin.repository.InstaRepository
+import me.danny.instacrawlerkotlin.utils.ILogging
 import me.danny.instacrawlerkotlin.utils.JdbcAsyncUtils
+import me.danny.instacrawlerkotlin.utils.LoggingImp
 import org.jsoup.Jsoup
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
@@ -20,9 +22,13 @@ import reactor.core.publisher.Mono
  * @since
  */
 @Service
-class InstaAccountService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaRepository: InstaRepository, val instaAccountDetailRepository: InstaAccountDetailRepository) {
+class InstaAccountService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaRepository: InstaRepository, val instaAccountDetailRepository: InstaAccountDetailRepository) : ILogging by LoggingImp<InstaAccountService>() {
     fun findInstaAccount(username: String): Mono<InstaAccountDto> {
         return jdbcAsyncUtils.asyncMono { Mono.just(findInstaAccountCrawling(username).toInstaAccountDto()) }
+    }
+
+    fun findInstaAccountByUserId(id: Long): Mono<InstaAccount> {
+        return instaRepository.findById(id).map { Mono.just(it) }.orElseGet { Mono.empty() }
     }
 
     fun addInstaAccount(username: String): Mono<InstaAccountDto> {
@@ -41,6 +47,10 @@ class InstaAccountService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaRepositor
         return jdbcAsyncUtils.asyncFlux {
             Flux.fromIterable(instaRepository.findAll().map { it.toInstaAccountDto() })
         }
+    }
+
+    fun updateInstaAccount(instaAccount: InstaAccount): InstaAccount {
+        return instaRepository.save(instaAccount)
     }
 
     private fun findInstaAccountCrawling(account: String): InstaAccount {
