@@ -16,4 +16,3 @@ create table insta_media
 
 alter table insta_media
     owner to gelato;
-

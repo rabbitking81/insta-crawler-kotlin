@@ -25,7 +25,7 @@ data class EdgeOwnerToTimelineMedia(
 ) {
     data class PageInfo(
         @JsonProperty("has_next_page")
-        val hasNextPage: Boolean,
+        var hasNextPage: Boolean,
 
         @JsonProperty("end_cursor")
         val endCursor: String?
