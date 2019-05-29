@@ -34,6 +34,9 @@ class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaReposi
     @Autowired
     lateinit var instaMediaDetailHistoryService: InstaMediaDetailHistoryService
 
+    @Autowired
+    lateinit var instaMediaTagService: InstaMediaTagService
+
     fun crawlingMediaByUser(userId: Long): Mono<InstaAccount> {
         return instaAccountService.findInstaAccountByUserId(userId)
             .flatMap {
@@ -98,6 +101,11 @@ class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaReposi
 
             val instaMedia = instaMediaRepository.save(edge.node.toInstaMedia(userId))
             val mediaDetailHistory = edge.node.toInstaMediaDetailHistory(instaMedia.id!!)
+
+            if(edge.node.edgeMediaToCaption.edges.isNotEmpty()) {
+                instaMediaTagService.saveTags(instaMedia.id, edge.node.edgeMediaToCaption.edges[0].node.text)
+            }
+
             instaMediaDetailHistoryService.save(mediaDetailHistory)
         }
 
