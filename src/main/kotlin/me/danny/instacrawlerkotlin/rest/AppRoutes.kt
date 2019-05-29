@@ -25,6 +25,7 @@ class AppRoutes {
 
             "/insta/media".nest {
                 POST("/", instaMediaCrawlingApiHandler::startCrawling)
+                POST("/detail", instaMediaCrawlingApiHandler::startMediaDetailCrawling)
             }
         }
     }

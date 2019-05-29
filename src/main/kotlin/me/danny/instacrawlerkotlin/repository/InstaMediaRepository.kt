@@ -16,4 +16,7 @@ import reactor.core.publisher.Mono
 interface InstaMediaRepository : JpaRepository<InstaMedia, Long> {
     @Query(value = "select * from insta_media where user_id = :user_id order by insta_created_date desc limit 1", nativeQuery = true)
     fun findLatestMediaByUserId(@Param(value = "user_id") userId: Long): InstaMedia?
+
+    @Query(value = "select * from insta_media where insta_media_id = :insta_media_id", nativeQuery = true)
+    fun findInstaMediaId(@Param(value = "insta_media_id") insta_media_id: String): InstaMedia?
 }

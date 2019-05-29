@@ -4,6 +4,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import me.danny.instacrawlerkotlin.model.EdgeOwnerToTimelineMedia
 import me.danny.instacrawlerkotlin.model.entity.InstaAccount
+import me.danny.instacrawlerkotlin.model.entity.InstaMediaDetailHistory
 import me.danny.instacrawlerkotlin.repository.InstaMediaRepository
 import me.danny.instacrawlerkotlin.utils.ILogging
 import me.danny.instacrawlerkotlin.utils.JdbcAsyncUtils
@@ -114,5 +115,36 @@ class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaReposi
 
         val doc = webClientBuilder.build().get().uri(url).retrieve().bodyToMono(String::class.java).block()
         return objectMapper.readValue(objectMapper.readTree(doc).get("data").get("user").get("edge_owner_to_timeline_media").toString())
+    }
+
+    fun getInstaMediasDetailHistory(accountId: Long): List<InstaMediaDetailHistory> {
+        val edgeList: ArrayList<EdgeOwnerToTimelineMedia.Edge> = arrayListOf()
+
+        var edgeOwnerToTimelineMedia: EdgeOwnerToTimelineMedia? = null
+
+        do {
+            edgeOwnerToTimelineMedia = getEdgeOwnerToTimelineMedia(accountId, edgeOwnerToTimelineMedia?.pageInfo?.endCursor)
+            for (edge in edgeOwnerToTimelineMedia.edges) {
+                val instaCreatedAt = edge.node.takenAtTimestamp.time * 1000
+
+                if ((System.currentTimeMillis() - instaCreatedAt) > (7 * (24 * 60 * 60) * 1000)) {
+                    edgeOwnerToTimelineMedia.pageInfo.hasNextPage = false
+                    break
+                }
+
+                edgeList.add(edge)
+            }
+        } while (edgeOwnerToTimelineMedia?.pageInfo?.hasNextPage ?: run { false })
+
+        val instaMediaDetailHistoryList : ArrayList<InstaMediaDetailHistory> = arrayListOf()
+
+        for(edge in edgeList) {
+            val instaMedia = instaMediaRepository.findInstaMediaId(edge.node.id)
+            instaMedia?.let {
+                instaMediaDetailHistoryList.add(InstaMediaDetailHistory(mediaId = instaMedia.id!!, likeCount = edge.node.edgeMediaPreviewLike.count.toInt(), commentCount = edge.node.edgeMediaToComment.count.toInt(), instaCreatedDate =  edge.node.takenAtTimestamp))
+            }
+        }
+
+        return instaMediaDetailHistoryList
     }
 }

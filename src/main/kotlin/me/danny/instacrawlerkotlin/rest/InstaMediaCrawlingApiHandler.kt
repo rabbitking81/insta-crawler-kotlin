@@ -2,6 +2,7 @@ package me.danny.instacrawlerkotlin.rest
 
 import me.danny.instacrawlerkotlin.model.entity.InstaAccount
 import me.danny.instacrawlerkotlin.model.form.InstaMediaForm
+import me.danny.instacrawlerkotlin.service.InstaMediaDetailHistoryService
 import me.danny.instacrawlerkotlin.service.InstaMediaService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -23,10 +24,20 @@ class InstaMediaCrawlingApiHandler {
     @Autowired
     lateinit var instaMediaService: InstaMediaService
 
+    @Autowired
+    lateinit var instaMediaDetailHistoryService: InstaMediaDetailHistoryService
+
     fun startCrawling(request: ServerRequest): Mono<ServerResponse> {
         return request.bodyToMono(InstaMediaForm::class.java)
             .flatMap {
                 ok().json().body(instaMediaService.crawlingMediaByUser(it.userId), InstaAccount::class.java)
+            }
+    }
+
+    fun startMediaDetailCrawling(request: ServerRequest): Mono<ServerResponse> {
+        return instaMediaDetailHistoryService.instaMediaDetailCrawling()
+            .flatMap {
+                ok().json().build()
             }
     }
 }
