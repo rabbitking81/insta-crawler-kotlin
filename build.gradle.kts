@@ -43,6 +43,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
     implementation("org.jsoup:jsoup:1.12.1")
+    implementation("net.logstash.logback:logstash-logback-encoder:+")
 }
 
 tasks.withType<KotlinCompile> {

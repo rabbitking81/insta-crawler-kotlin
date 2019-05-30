@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  mustache:
+    suffix:.hbs
+  datasource:
+    url: jdbc:postgresql://localhost:15432/instagram_crawling_db
+    username: gelato
+    password: gelato
+    hikari:
+      maximum-pool-size: 5
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+  flyway:
+    url: jdbc:postgresql://localhost:15432/instagram_crawling_db
+    enabled: true
+    encoding: UTF-8
+    user: gelato
+    password: gelato
+    baseline-on-migrate: true

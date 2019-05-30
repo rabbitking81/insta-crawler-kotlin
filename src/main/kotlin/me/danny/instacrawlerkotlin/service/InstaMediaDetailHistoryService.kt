@@ -5,6 +5,7 @@ import me.danny.instacrawlerkotlin.repository.InstaMediaDetailHistoryRepository
 import me.danny.instacrawlerkotlin.utils.ILogging
 import me.danny.instacrawlerkotlin.utils.JdbcAsyncUtils
 import me.danny.instacrawlerkotlin.utils.LoggingImp
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
@@ -25,6 +26,8 @@ class InstaMediaDetailHistoryService(val jdbcAsyncUtils: JdbcAsyncUtils, val ins
     @Autowired
     lateinit var instaMediaService: InstaMediaService
 
+    private val instaLogger = LoggerFactory.getLogger("insta")
+
     fun save(instaMediaDetailHistory: InstaMediaDetailHistory): InstaMediaDetailHistory {
         return instaMediaDetailHistoryRepository.save(instaMediaDetailHistory)
     }
@@ -41,6 +44,7 @@ class InstaMediaDetailHistoryService(val jdbcAsyncUtils: JdbcAsyncUtils, val ins
         instaAccountService.list()
             .map {
                 log.info("start crawling media detail: {}", it.instaAccountName)
+
                 instaMediaDetailHistoryRepository.saveAll(instaMediaService.getInstaMediasDetailHistory(it.instaAccountId))
             }
             .subscribeOn(Schedulers.elastic())

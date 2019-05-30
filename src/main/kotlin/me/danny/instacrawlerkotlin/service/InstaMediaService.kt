@@ -9,6 +9,7 @@ import me.danny.instacrawlerkotlin.repository.InstaMediaRepository
 import me.danny.instacrawlerkotlin.utils.ILogging
 import me.danny.instacrawlerkotlin.utils.JdbcAsyncUtils
 import me.danny.instacrawlerkotlin.utils.LoggingImp
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
@@ -36,6 +37,8 @@ class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaReposi
 
     @Autowired
     lateinit var instaMediaTagService: InstaMediaTagService
+
+    private val instaLogger = LoggerFactory.getLogger("insta")
 
     fun crawlingMediaByUser(userId: Long): Mono<InstaAccount> {
         return instaAccountService.findInstaAccountByUserId(userId)
@@ -139,6 +142,8 @@ class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaReposi
                     edgeOwnerToTimelineMedia.pageInfo.hasNextPage = false
                     break
                 }
+
+                instaLogger.debug("{},{},{}", edge.node.id, edge.node.edgeMediaPreviewLike.count, edge.node.edgeMediaToComment.count)
 
                 edgeList.add(edge)
             }
