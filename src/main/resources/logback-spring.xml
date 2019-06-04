@@ -36,10 +36,8 @@
     <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>54.180.119.226:8094</destination>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <jsonGeneratorDecorator
-                    class="me.danny.instacrawlerkotlin.utils.logback.PrettyPrintingDecorator"/>
-            <jsonFactoryDecorator
-                    class="me.danny.instacrawlerkotlin.utils.logback.ISO8601DateDecorator"/>
+            <jsonGeneratorDecorator class="me.danny.instacrawlerkotlin.utils.logback.PrettyPrintingDecorator"/>
+            <jsonFactoryDecorator class="me.danny.instacrawlerkotlin.utils.logback.ISO8601DateDecorator"/>
         </encoder>
     </appender>
 
@@ -51,10 +49,10 @@
 
 
     <!-- INFO 레벨 이하 로그를 콘솔 및 파일로 출력 -->
-<!--    <root level="INFO">-->
-<!--        <appender-ref ref="TEXT_CONSOLE"/>-->
+    <root level="DEBUG">
+        <appender-ref ref="TEXT_CONSOLE"/>
 <!--        <appender-ref ref="JSON_FILE"/>-->
-<!--    </root>-->
+    </root>
 
 <!--    <root level="DEBUG">-->
 <!--        <appender-ref ref="stash"/>-->
