@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
-import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.scheduler.Schedulers
 
@@ -39,21 +38,50 @@ class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaReposi
     lateinit var instaMediaTagService: InstaMediaTagService
 
     private val instaLogger = LoggerFactory.getLogger("insta")
+    val objectMapper = jacksonObjectMapper()
 
     fun crawlingMediaByUser(userId: Long): Mono<InstaAccount> {
         return instaAccountService.findInstaAccountByUserId(userId)
             .flatMap {
                 if (it.status == "READY") {
-                    startCrawling(it)
+                    startCrawlingAsync(it)
                 }
 
                 Mono.just(it)
             }
     }
 
-    private fun startCrawling(account: InstaAccount) {
-        var endCursor: String? = null
+    fun crawlingAll(): Mono<Void> {
+        startCrawlingAll()
 
+        return Mono.empty()
+    }
+
+    private fun startCrawlingAll() {
+        log.info("start crawling media detail")
+
+        instaAccountService.listEntity()
+            .map { account ->
+                account.status = "CRAWLING"
+                instaAccountService.updateInstaAccount(account)
+            }
+            .flatMap { instaAccount ->
+                getMediaFromInsta(instaAccount).map {
+                    instaAccount
+                }
+            }
+            .map { account ->
+                account.status = "READY"
+                instaAccountService.updateInstaAccount(account)
+            }
+            .subscribeOn(Schedulers.elastic())
+            .subscribe {
+                log.info("stop media detail")
+            }
+    }
+
+
+    private fun startCrawlingAsync(account: InstaAccount) {
         log.info("start crawling: {}", account.toString())
 
         Mono.just(account)
@@ -62,8 +90,7 @@ class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaReposi
                 instaAccountService.updateInstaAccount(account)
             }
             .flatMap { instaAccount ->
-                getMediaFromInsta(instaAccount, endCursor).map {
-                    endCursor = it.pageInfo.endCursor
+                getMediaFromInsta(instaAccount).map {
                     it
                 }
             }
@@ -77,7 +104,7 @@ class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaReposi
             }
     }
 
-    private fun getMediaFromInsta(instaAccount: InstaAccount, endCursor: String? = null): Mono<EdgeOwnerToTimelineMedia> {
+    private fun getMediaFromInsta(instaAccount: InstaAccount): Mono<EdgeOwnerToTimelineMedia> {
         return Mono.just(instaAccount)
             .map { instaAccount ->
                 val latestMedia = instaMediaRepository.findLatestMediaByUserId(instaAccount.id!!)?.instaMediaId?.toLong()
@@ -105,10 +132,11 @@ class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaReposi
             val instaMedia = instaMediaRepository.save(edge.node.toInstaMedia(userId))
             val mediaDetailHistory = edge.node.toInstaMediaDetailHistory(instaMedia.id!!)
 
-            if(edge.node.edgeMediaToCaption.edges.isNotEmpty()) {
+            if (edge.node.edgeMediaToCaption.edges.isNotEmpty()) {
                 instaMediaTagService.saveTags(instaMedia.id, edge.node.edgeMediaToCaption.edges[0].node.text)
             }
 
+            instaLogger.debug(objectMapper.writeValueAsString(mediaDetailHistory))
             instaMediaDetailHistoryService.save(mediaDetailHistory)
         }
 
@@ -143,18 +171,18 @@ class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaReposi
                     break
                 }
 
-                instaLogger.debug("{},{},{}", edge.node.id, edge.node.edgeMediaPreviewLike.count, edge.node.edgeMediaToComment.count)
-
                 edgeList.add(edge)
             }
         } while (edgeOwnerToTimelineMedia?.pageInfo?.hasNextPage ?: run { false })
 
-        val instaMediaDetailHistoryList : ArrayList<InstaMediaDetailHistory> = arrayListOf()
+        val instaMediaDetailHistoryList: ArrayList<InstaMediaDetailHistory> = arrayListOf()
 
-        for(edge in edgeList) {
+        for (edge in edgeList) {
             val instaMedia = instaMediaRepository.findInstaMediaId(edge.node.id)
             instaMedia?.let {
-                instaMediaDetailHistoryList.add(InstaMediaDetailHistory(mediaId = instaMedia.id!!, likeCount = edge.node.edgeMediaPreviewLike.count.toInt(), commentCount = edge.node.edgeMediaToComment.count.toInt(), instaCreatedDate =  edge.node.takenAtTimestamp))
+                val detail = InstaMediaDetailHistory(mediaId = instaMedia.id!!, likeCount = edge.node.edgeMediaPreviewLike.count.toInt(), commentCount = edge.node.edgeMediaToComment.count.toInt(), instaCreatedDate = edge.node.takenAtTimestamp)
+                instaLogger.debug(objectMapper.writeValueAsString(detail))
+                instaMediaDetailHistoryList.add(detail)
             }
         }
 

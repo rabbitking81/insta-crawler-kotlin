@@ -36,8 +36,8 @@
     <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>54.180.119.226:8094</destination>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <jsonGeneratorDecorator class="me.danny.instacrawlerkotlin.utils.logback.PrettyPrintingDecorator"/>
-            <jsonFactoryDecorator class="me.danny.instacrawlerkotlin.utils.logback.ISO8601DateDecorator"/>
+<!--            <jsonGeneratorDecorator class="me.danny.instacrawlerkotlin.utils.logback.PrettyPrintingDecorator"/>-->
+<!--            <jsonFactoryDecorator class="me.danny.instacrawlerkotlin.utils.logback.ISO8601DateDecorator"/>-->
         </encoder>
     </appender>
 

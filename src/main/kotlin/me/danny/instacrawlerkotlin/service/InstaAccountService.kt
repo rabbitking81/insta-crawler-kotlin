@@ -13,6 +13,7 @@ import org.jsoup.Jsoup
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import reactor.core.publisher.toFlux
 
 /**
  *
@@ -40,6 +41,12 @@ class InstaAccountService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaRepositor
             instaAccountDetailRepository.save(instaDetail)
 
             Mono.just(entity.toInstaAccountDto())
+        }
+    }
+
+    fun listEntity(): Flux<InstaAccount> {
+        return jdbcAsyncUtils.asyncFlux {
+            Flux.fromIterable(instaRepository.findAll())
         }
     }
 

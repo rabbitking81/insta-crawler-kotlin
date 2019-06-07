@@ -55,8 +55,8 @@ tasks.withType<KotlinCompile> {
 
 flyway {
     driver = "org.postgresql.Driver"
-    url = "jdbc:postgresql://localhost:15432/instagram_crawling_db"
+    url = "jdbc:postgresql://dev-crawling-db.gelato.im:5432/instagram_crawling_db"
     user = "gelato"
-    password = "gelato"
+    password = "wpffkEh16)&"
     schemas = arrayOf("public")
 }

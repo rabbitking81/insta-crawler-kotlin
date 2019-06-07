@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8090
 
 spring:
   main:
@@ -7,9 +7,9 @@ spring:
   mustache:
     suffix:.hbs
   datasource:
-    url: jdbc:postgresql://localhost:15432/instagram_crawling_db
+    url: jdbc:postgresql://dev-crawling-db.gelato.im:5432/instagram_crawling_db
     username: gelato
-    password: gelato
+    password: wpffkEh16)&
     hikari:
       maximum-pool-size: 5
   jpa:
@@ -23,9 +23,9 @@ spring:
         temp:
           use_jdbc_metadata_defaults: false
   flyway:
-    url: jdbc:postgresql://localhost:15432/instagram_crawling_db
+    url: jdbc:postgresql://dev-crawling-db.gelato.im:5432/instagram_crawling_db
     enabled: true
     encoding: UTF-8
     user: gelato
-    password: gelato
+    password: wpffkEh16)&
     baseline-on-migrate: true

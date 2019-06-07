@@ -40,4 +40,11 @@ class InstaMediaCrawlingApiHandler {
                 ok().json().build()
             }
     }
+
+    fun allCrawling(request: ServerRequest): Mono<ServerResponse> {
+        return instaMediaService.crawlingAll()
+            .flatMap {
+                ok().json().build()
+            }
+    }
 }

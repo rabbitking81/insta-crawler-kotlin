@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.core.env.Environment
+import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.DispatcherServlet
 import java.sql.Timestamp
@@ -48,7 +49,7 @@ class ServiceApplicationRunner : ApplicationRunner, ILogging by LoggingImp<Servi
             info("===============================================")
         }
 
-        instaLogger.debug(objectMapper.writeValueAsString(InstaMediaDetailHistory(mediaId = 112, likeCount = 1, commentCount = 2, instaCreatedDate = Timestamp(System.currentTimeMillis()))))
+//        instaLogger.debug(objectMapper.writeValueAsString(InstaMediaDetailHistory(mediaId = 112, likeCount = 1, commentCount = 2, instaCreatedDate = Timestamp(System.currentTimeMillis()))))
 
         servlet?.setThrowExceptionIfNoHandlerFound(true)
     }
