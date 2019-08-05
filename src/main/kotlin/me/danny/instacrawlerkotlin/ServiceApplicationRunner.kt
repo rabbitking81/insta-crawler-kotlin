@@ -49,8 +49,6 @@ class ServiceApplicationRunner : ApplicationRunner, ILogging by LoggingImp<Servi
             info("===============================================")
         }
 
-//        instaLogger.debug(objectMapper.writeValueAsString(InstaMediaDetailHistory(mediaId = 112, likeCount = 1, commentCount = 2, instaCreatedDate = Timestamp(System.currentTimeMillis()))))
-
         servlet?.setThrowExceptionIfNoHandlerFound(true)
     }
 }

@@ -2,7 +2,9 @@ package me.danny.instacrawlerkotlin.service
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import me.danny.instacrawlerkotlin.model.Edge
 import me.danny.instacrawlerkotlin.model.EdgeHashTagToTopPosts
+import me.danny.instacrawlerkotlin.model.EdgeItem
 import me.danny.instacrawlerkotlin.model.EdgeOwnerToTimelineMedia
 import me.danny.instacrawlerkotlin.model.entity.*
 import me.danny.instacrawlerkotlin.repository.*
@@ -10,23 +12,18 @@ import me.danny.instacrawlerkotlin.utils.ILogging
 import me.danny.instacrawlerkotlin.utils.JdbcAsyncUtils
 import me.danny.instacrawlerkotlin.utils.LoggingImp
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.util.DefaultUriBuilderFactory
+import org.springframework.web.util.DefaultUriBuilderFactory.EncodingMode
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.publisher.toFlux
-import me.danny.instacrawlerkotlin.model.Edge
-import me.danny.instacrawlerkotlin.model.EdgeItem
-import org.springframework.http.MediaType
-import org.springframework.scheduling.annotation.Async
-import org.springframework.web.util.UriBuilder
 import reactor.core.scheduler.Schedulers
 import reactor.util.function.Tuples
-import java.net.URLEncoder
 import java.sql.Timestamp
 import javax.transaction.Transactional
-import org.springframework.web.util.DefaultUriBuilderFactory.EncodingMode
-import org.springframework.web.util.DefaultUriBuilderFactory
 
 
 /**
@@ -146,9 +143,13 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
         var count = 0;
 
         for (item in medias) {
-            // 유저 크롤링
-            val instaUser = instaAccountService.getInstaAccountById(ownerId = item.node.owner.id)
-            val instaAccount = instaAccountService.getUserAndSave(instaUser)
+            var instaAccount = instaAccountService.isNeedInstaAccount(item.node.owner.id, calculatedDate)
+            if (instaAccount == null) {
+                val instaUser = instaAccountService.getInstaAccountById(ownerId = item.node.owner.id)
+                instaAccount = instaAccountService.getUserAndSave(instaUser, calculatedDate)
+
+                Thread.sleep(randomRange(3, 7) * 1000L)
+            }
 
             // 미디어
             saveInstaMediaByTag(item.node, instaAccount, calculatedDate, isTop)
@@ -182,8 +183,6 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
             commentCount = media.edgeMediaToComment.count,
             calculatedDate = calculatedDate,
             createdDate = Timestamp(System.currentTimeMillis())))
-
-        Thread.sleep(randomRange(5, 9) * 100L)
     }
 
     private fun saveTags(mediaId: Long, text: String) {

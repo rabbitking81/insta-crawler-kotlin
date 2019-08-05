@@ -35,9 +35,12 @@ data class InstaAccountDetailHistory(
     val isPrivacy: Boolean,
 
     @Column(name = "created_date", nullable = false)
-    val createdDate: Timestamp
+    val createdDate: Timestamp,
+
+    @Column(name = "calculated_date")
+    val calculatedDate: Timestamp?
 ) {
-    constructor(userId: Long, followCount: Int, followedCount: Int, mediaCount: Int, isPrivacy: Boolean) : this(null, userId, followCount, followedCount, mediaCount, isPrivacy, Timestamp(System.currentTimeMillis()))
+    constructor(userId: Long, followCount: Int, followedCount: Int, mediaCount: Int, isPrivacy: Boolean, calculatedDate: Timestamp?) : this(null, userId, followCount, followedCount, mediaCount, isPrivacy, Timestamp(System.currentTimeMillis()), calculatedDate)
 
 //    fun toInstaAccountDto() = instaAccountToInstaAccountDto.transform(this)
 }

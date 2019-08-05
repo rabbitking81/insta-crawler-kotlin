@@ -6,7 +6,6 @@ import me.danny.instacrawlerkotlin.model.InstaUser
 import me.danny.instacrawlerkotlin.model.dto.InstaAccountDto
 import me.danny.instacrawlerkotlin.model.entity.InstaAccount
 import me.danny.instacrawlerkotlin.model.entity.InstaAccountDetailHistory
-import me.danny.instacrawlerkotlin.model.entity.InstaMediaDetailHistory
 import me.danny.instacrawlerkotlin.repository.InstaAccountDetailRepository
 import me.danny.instacrawlerkotlin.repository.InstaRepository
 import me.danny.instacrawlerkotlin.utils.ILogging
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import reactor.core.publisher.toFlux
+import java.sql.Timestamp
 import javax.transaction.Transactional
 
 /**
@@ -97,7 +96,7 @@ class InstaAccountService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaRepositor
         val mediaCount = result.get("edge_owner_to_timeline_media").get("count").asInt()
         val isPravicy = result.get("is_private").asBoolean()
 
-        return InstaAccountDetailHistory(userId = userId, followCount = followedCount, followedCount = followCount, mediaCount = mediaCount, isPrivacy = isPravicy)
+        return InstaAccountDetailHistory(userId = userId, followCount = followedCount, followedCount = followCount, mediaCount = mediaCount, isPrivacy = isPravicy, calculatedDate = null)
     }
 
     fun getInstaAccountById(ownerId: String): InstaUser {
@@ -109,7 +108,7 @@ class InstaAccountService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaRepositor
     }
 
     @Transactional
-    fun getUserAndSave(instaUser: InstaUser): InstaAccount {
+    fun getUserAndSave(instaUser: InstaUser, calculatedDate: Timestamp): InstaAccount {
         var instaAccount = instaRepository.findByInstaAccountId(instaUser.pk)
         if (instaAccount == null) {
             instaAccount = instaRepository.save(InstaAccount(accountId = instaUser.pk,
@@ -122,7 +121,17 @@ class InstaAccountService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaRepositor
             followCount = instaUser.followerCount,
             followedCount = instaUser.followingCount,
             mediaCount = instaUser.mediaCount,
-            isPrivacy = instaUser.isPrivate))
+            isPrivacy = instaUser.isPrivate,
+            calculatedDate = calculatedDate))
+
+        return instaAccount
+    }
+
+    fun isNeedInstaAccount(ownerId: String, calculatedDate: Timestamp): InstaAccount? {
+        val instaAccount = instaRepository.findByInstaAccountId(ownerId.toLong()) ?: return null
+
+        instaAccountDetailRepository.findByInstaAccountIdAndCalculated(instaAccount.id!!, calculatedDate)
+            ?: return instaAccount
 
         return instaAccount
     }
