@@ -20,5 +20,7 @@ data class InstaAccountDto(
 
     val status: String,
 
-    val createdDate: Timestamp
+    val createdDate: Timestamp,
+
+    val accountType: Int
 )

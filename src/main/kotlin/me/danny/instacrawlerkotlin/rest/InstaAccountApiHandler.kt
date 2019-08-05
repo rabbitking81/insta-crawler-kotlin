@@ -25,13 +25,14 @@ class InstaAccountApiHandler {
 
     fun findInstaAccount(request: ServerRequest): Mono<ServerResponse> {
         val account = request.queryParam("account").get()
-        return ok().json().body(instaAccountService.findInstaAccount(account), InstaAccountDto::class.java)
+        val accountType = request.queryParam("accountType").get().toInt()
+        return ok().json().body(instaAccountService.findInstaAccount(account, accountType), InstaAccountDto::class.java)
     }
 
     fun addInstaAccount(request: ServerRequest): Mono<ServerResponse> {
         return request.bodyToMono(InstaAccountForm::class.java)
             .flatMap {
-                instaAccountService.addInstaAccount(it.userName).flatMap {
+                instaAccountService.addInstaAccount(it.userName, it.accountType).flatMap {
                     ok().json().body(Mono.just(it), InstaAccountDto::class.java)
                 }
             }

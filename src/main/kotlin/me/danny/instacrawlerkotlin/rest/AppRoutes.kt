@@ -28,6 +28,10 @@ class AppRoutes {
                 POST("/detail", instaMediaCrawlingApiHandler::startMediaDetailCrawling)
                 POST("/all", instaMediaCrawlingApiHandler::allCrawling)
             }
+
+            "/insta/tag".nest {
+                GET("/crawling", instaMediaCrawlingApiHandler::testCrawlingByTag)
+            }
         }
     }
 }

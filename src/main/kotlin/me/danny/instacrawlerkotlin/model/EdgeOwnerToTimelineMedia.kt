@@ -30,72 +30,86 @@ data class EdgeOwnerToTimelineMedia(
         @JsonProperty("end_cursor")
         val endCursor: String?
     )
+}
 
-    data class Edge(
-        @JsonProperty("node")
-        val node: EdgeItem
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class EdgeHashTagToTopPosts(
+    @JsonProperty("edges")
+    val edges: List<Edge>
+)
+
+data class Edge(
+    @JsonProperty("node")
+    val node: EdgeItem
+)
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class EdgeItem(
+    @JsonProperty("id")
+    val id: String,
+
+    @JsonProperty("__typename")
+    val __typename: String,
+
+    @JsonProperty("shortcode")
+    val shortcode: String,
+
+    @JsonProperty("edge_media_to_caption")
+    val edgeMediaToCaption: EdgeMediaToCaption,
+
+    @JsonProperty("edge_media_to_comment")
+    val edgeMediaToComment: EdgeMediaToComment,
+
+    @JsonProperty("edge_media_preview_like")
+    val edgeMediaPreviewLike: EdgeMediaPreviewLike,
+
+    @JsonProperty("is_video")
+    val isVideo: Boolean,
+
+    @JsonProperty("display_url")
+    val displayUrl: String,
+
+    @JsonProperty("taken_at_timestamp")
+    val takenAtTimestamp: Timestamp,
+
+    @JsonProperty("owner")
+    val owner: Owner
+) {
+    fun toInstaMedia(userId: Long?): InstaMedia {
+        return InstaMedia(shortCode = this.shortcode, instaMediaId = this.id, imageUrl = this.displayUrl, instaType = this.__typename, userId = userId, instaCreatedDate = this.takenAtTimestamp)
+    }
+
+    fun toInstaMediaDetailHistory(mediaId: Long): InstaMediaDetailHistory {
+        return InstaMediaDetailHistory(mediaId = mediaId, likeCount = this.edgeMediaPreviewLike.count.toInt(), commentCount = this.edgeMediaToComment.count.toInt(), instaCreatedDate = this.takenAtTimestamp)
+    }
+
+    data class EdgeMediaToCaption(
+        @JsonProperty("edges")
+        val edges: List<SubEdge>
+    ) {
+        data class SubEdge(
+            @JsonProperty("node")
+            val node: SubNode
+        ) {
+            data class SubNode(
+                @JsonProperty("text")
+                val text: String
+            )
+        }
+    }
+
+    data class EdgeMediaToComment(
+        @JsonProperty("count")
+        val count: Long
     )
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    data class EdgeItem(
+    data class EdgeMediaPreviewLike(
+        @JsonProperty("count")
+        val count: Long
+    )
+
+    data class Owner(
         @JsonProperty("id")
-        val id: String,
-
-        @JsonProperty("__typename")
-        val __typename: String,
-
-        @JsonProperty("shortcode")
-        val shortcode: String,
-
-        @JsonProperty("edge_media_to_caption")
-        val edgeMediaToCaption: EdgeMediaToCaption,
-
-        @JsonProperty("edge_media_to_comment")
-        val edgeMediaToComment: EdgeMediaToComment,
-
-        @JsonProperty("edge_media_preview_like")
-        val edgeMediaPreviewLike: EdgeMediaPreviewLike,
-
-        @JsonProperty("is_video")
-        val isVideo: Boolean,
-
-        @JsonProperty("display_url")
-        val displayUrl: String,
-
-        @JsonProperty("taken_at_timestamp")
-        val takenAtTimestamp: Timestamp
-    ) {
-        fun toInstaMedia(userId: Long?): InstaMedia {
-            return InstaMedia(shortCode = this.shortcode, instaMediaId = this.id, imageUrl = this.displayUrl, instaType = this.__typename, userId = userId, instaCreatedDate = this.takenAtTimestamp)
-        }
-
-        fun toInstaMediaDetailHistory(mediaId: Long): InstaMediaDetailHistory {
-            return InstaMediaDetailHistory(mediaId = mediaId, likeCount = this.edgeMediaPreviewLike.count.toInt(), commentCount = this.edgeMediaToComment.count.toInt(), instaCreatedDate = this.takenAtTimestamp)
-        }
-
-        data class EdgeMediaToCaption(
-            @JsonProperty("edges")
-            val edges: List<SubEdge>
-        ) {
-            data class SubEdge(
-                @JsonProperty("node")
-                val node: SubNode
-            ) {
-                data class SubNode(
-                    @JsonProperty("text")
-                    val text: String
-                )
-            }
-        }
-
-        data class EdgeMediaToComment(
-            @JsonProperty("count")
-            val count: Long
-        )
-
-        data class EdgeMediaPreviewLike(
-            @JsonProperty("count")
-            val count: Long
-        )
-    }
+        val id: String
+    )
 }

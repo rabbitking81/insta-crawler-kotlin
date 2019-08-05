@@ -27,6 +27,7 @@ data class InstaMedia(
     @Column(name = "image_url", nullable = false)
     val imageUrl: String,
 
+
     @Column(name = "insta_type", nullable = false)
     val instaType: String,
 

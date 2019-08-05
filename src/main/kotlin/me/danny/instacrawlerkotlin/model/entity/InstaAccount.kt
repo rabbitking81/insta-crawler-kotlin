@@ -32,9 +32,19 @@ data class InstaAccount(
     var status: String,
 
     @Column(name = "created_date", nullable = false)
-    val createdDate: Timestamp
+    val createdDate: Timestamp,
+
+    @Column(name = "account_type", nullable = false)
+    val accountType: Int,
+
+    @Column(name = "country")
+    var country: String?,
+
+    @Column(name = "is_crawling", nullable = false)
+    var isCrawling: Boolean
 ) {
-    constructor(accountId: Long, accountName: String, fullName: String, status: String) : this(null, accountId, accountName, fullName, status, Timestamp(System.currentTimeMillis()))
+    constructor(accountId: Long, accountName: String, fullName: String, status: String, accountType: Int, country: String?, isCrawling: Boolean)
+        : this(null, accountId, accountName, fullName, status, Timestamp(System.currentTimeMillis()), accountType, country, isCrawling)
 
     fun toInstaAccountDto() = instaAccountToInstaAccountDto.transform(this)
 }

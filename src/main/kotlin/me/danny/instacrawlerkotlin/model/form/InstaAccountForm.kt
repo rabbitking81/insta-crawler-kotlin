@@ -8,5 +8,6 @@ package me.danny.instacrawlerkotlin.model.form
  * @since
  */
 data class InstaAccountForm(
-    val userName: String
+    val userName: String,
+    val accountType: Int
 )

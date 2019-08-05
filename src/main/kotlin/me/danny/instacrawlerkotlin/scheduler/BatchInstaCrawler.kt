@@ -1,4 +1,4 @@
-package me.danny.instacrawlerkotlin.Scheduler
+package me.danny.instacrawlerkotlin.scheduler
 
 import me.danny.instacrawlerkotlin.service.InstaMediaDetailHistoryService
 import me.danny.instacrawlerkotlin.service.InstaMediaService
@@ -24,7 +24,7 @@ class BatchInstaCrawler : ILogging by LoggingImp<BatchInstaCrawler>() {
     @Autowired
     lateinit var instaMediaService: InstaMediaService
 
-    @Scheduled(cron = "0 0 0/3 * * ?")
+//    @Scheduled(cron = "0 0 0/6 * * ?")
     fun instaMediaCrawling() {
         log.info("start cron insta media service!!")
 
@@ -35,7 +35,7 @@ class BatchInstaCrawler : ILogging by LoggingImp<BatchInstaCrawler>() {
             }
     }
 
-    @Scheduled(cron = "0 0 0/6 * * ?")
+//    @Scheduled(cron = "0 0 0/12 * * ?")
     fun instaMediaCrawlingAll() {
         log.info("== start cron insta media service!!")
 

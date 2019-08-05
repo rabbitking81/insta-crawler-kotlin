@@ -2,6 +2,7 @@ package me.danny.instacrawlerkotlin.service
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import me.danny.instacrawlerkotlin.model.Edge
 import me.danny.instacrawlerkotlin.model.EdgeOwnerToTimelineMedia
 import me.danny.instacrawlerkotlin.model.entity.InstaAccount
 import me.danny.instacrawlerkotlin.model.entity.InstaMediaDetailHistory
@@ -117,13 +118,15 @@ class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaReposi
                     if (!saveInstaMedia(edgeOwnerToTimelineMedia.edges, latestMedia, instaAccount.id)) {
                         edgeOwnerToTimelineMedia.pageInfo.hasNextPage = false
                     }
+
+                    Thread.sleep(10000)
                 } while (edgeOwnerToTimelineMedia?.pageInfo?.hasNextPage ?: run { false })
 
                 edgeOwnerToTimelineMedia
             }
     }
 
-    private fun saveInstaMedia(edges: List<EdgeOwnerToTimelineMedia.Edge>, latestMedia: Long, userId: Long): Boolean {
+    private fun saveInstaMedia(edges: List<Edge>, latestMedia: Long, userId: Long): Boolean {
         for (edge in edges) {
             if (latestMedia >= edge.node.id.toLong()) {
                 return false
@@ -157,7 +160,7 @@ class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaReposi
     }
 
     fun getInstaMediasDetailHistory(accountId: Long): List<InstaMediaDetailHistory> {
-        val edgeList: ArrayList<EdgeOwnerToTimelineMedia.Edge> = arrayListOf()
+        val edgeList: ArrayList<Edge> = arrayListOf()
 
         var edgeOwnerToTimelineMedia: EdgeOwnerToTimelineMedia? = null
 
@@ -173,6 +176,8 @@ class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaReposi
 
                 edgeList.add(edge)
             }
+
+            Thread.sleep(6000)
         } while (edgeOwnerToTimelineMedia?.pageInfo?.hasNextPage ?: run { false })
 
         val instaMediaDetailHistoryList: ArrayList<InstaMediaDetailHistory> = arrayListOf()
