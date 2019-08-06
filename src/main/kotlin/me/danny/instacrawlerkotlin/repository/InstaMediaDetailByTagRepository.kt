@@ -2,6 +2,7 @@ package me.danny.instacrawlerkotlin.repository
 
 import me.danny.instacrawlerkotlin.model.entity.InstaMediaDetailByTag
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
 /**
  *
@@ -10,4 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository
  * @author rabbitking81
  * @since
  */
+@Repository
 interface InstaMediaDetailByTagRepository : JpaRepository<InstaMediaDetailByTag, Long>

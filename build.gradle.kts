@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 buildscript {
     repositories {
@@ -21,12 +22,31 @@ plugins {
 }
 
 group = "me.danny"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.3-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
 }
+//
+//
+//tasks {
+//    withType<Jar> {
+//        enabled = true
+//        doFirst {
+//            manifest {
+//                attributes["Main-Class"] = "me.danny.instacrawlerkotlin.ApplicationKt"
+//            }
+//
+//            exclude("META-INF/*", "META-INF/*.SF", "META-INF/*.DSA")
+//
+//            from({
+//                configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+//            })
+//        }
+//    }
+//
+//}
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -60,3 +80,16 @@ flyway {
     password = "wpffkEh16)&"
     schemas = arrayOf("public")
 }
+
+tasks.getByName<Jar>("jar") {
+    enabled = true
+}
+
+springBoot {
+    mainClassName = "me.danny.instacrawlerkotlin.ApplicationKt"
+}
+
+tasks.getByName<BootJar>("bootJar") {
+    mainClassName = "me.danny.instacrawlerkotlin.ApplicationKt"
+}
+

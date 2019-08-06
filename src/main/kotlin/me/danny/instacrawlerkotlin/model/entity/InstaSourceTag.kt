@@ -28,7 +28,8 @@ data class InstaSourceTag(
     val createdDate: Timestamp,
 
     @Column(name = "is_crawling", nullable = false)
-    val isCrawling: Boolean
-) {
+    val isCrawling: Boolean,
 
-}
+    @Column(name = "end_cursor")
+    var endCursor: String?
+)
