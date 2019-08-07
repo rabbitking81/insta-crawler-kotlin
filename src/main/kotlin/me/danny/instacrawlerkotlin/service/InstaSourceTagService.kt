@@ -24,10 +24,6 @@ import reactor.core.scheduler.Schedulers
 import reactor.util.function.Tuples
 import java.sql.Timestamp
 import javax.transaction.Transactional
-import java.text.SimpleDateFormat
-import java.text.DateFormat
-
-
 
 
 /**
@@ -79,7 +75,7 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
             Mono.just(Tuples.of(t, instaSourceTagHistory!!))
         }.flatMap {
             // loop 을 돌면서 해당 태그에 해당하는 디자인을 다 긁어온다.
-            val totalCount = getInstaMediaByTag(it.t1.name, it.t2.start_at)
+            val totalCount = getInstaMediaByTag(it.t1.name, it.t2.start_at, it.t1.id!!)
             it.t2.cnt = totalCount
 
             Mono.just(it)
@@ -148,9 +144,10 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
     }
 
     @Transactional
-    fun getInstaMediaByTag(tagName: String, calculatedDate: Timestamp): Int {
+    fun getInstaMediaByTag(tagName: String, calculatedDate: Timestamp, sourceTagId: Long): Int {
         var totalCount = 0
         var edgeOwnerToTimelineMedia: EdgeOwnerToTimelineMedia? = null
+        var isBreak = false
 
         try {
             do {
@@ -158,10 +155,19 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
                 edgeOwnerToTimelineMedia = instaMedias.first
 
                 instaMedias.second?.let {
-                    totalCount += saveInstaMedias(it.edges, calculatedDate, true)
+                    val pairResultTop = saveInstaMedias(it.edges, calculatedDate, true, sourceTagId)
+                    totalCount += pairResultTop.first
+                    isBreak = pairResultTop.second
                 }
 
-                totalCount += saveInstaMedias(edgeOwnerToTimelineMedia.edges, calculatedDate, false)
+                if (isBreak) break
+
+                val pairResult = saveInstaMedias(edgeOwnerToTimelineMedia.edges, calculatedDate, false, sourceTagId)
+                totalCount += pairResult.first
+                isBreak = pairResult.second
+
+                if (isBreak) break
+
                 Thread.sleep(randomRange(5, 9) * 1000L)
             } while (edgeOwnerToTimelineMedia?.pageInfo?.hasNextPage ?: run { false })
 
@@ -171,15 +177,24 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
         }
     }
 
-    private fun saveInstaMedias(medias: List<Edge>, calculatedDate: Timestamp, isTop: Boolean): Int {
+    private fun saveInstaMedias(medias: List<Edge>, calculatedDate: Timestamp, isTop: Boolean, sourceTagId: Long): Pair<Int, Boolean> {
         var count = 0;
-        val limitDateTime = "2019-05-01 00:00:00.0" // 형식을 지켜야 함
+        val limitDateTime = "2019-06-01 00:00:00.0" // 형식을 지켜야 함
         val limitDateTimeStamp = java.sql.Timestamp.valueOf(limitDateTime)
-
+        var failedCount = 0
+        var isBreak: Boolean = false
 
         for (item in medias) {
-            if(item.node.takenAtTimestamp.time * 1000 < limitDateTimeStamp.time) {
+            if (failedCount > 5) {
+                isBreak = true
+                break
+            }
+
+            if (item.node.takenAtTimestamp.time * 1000 < limitDateTimeStamp.time) {
+                failedCount++
                 continue
+            } else {
+                failedCount = 0
             }
 
             var instaAccount = instaAccountService.isNeedInstaAccount(item.node.owner.id, calculatedDate)
@@ -191,15 +206,15 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
             }
 
             // 미디어
-            saveInstaMediaByTag(item.node, instaAccount, calculatedDate, isTop)
+            saveInstaMediaByTag(item.node, instaAccount, calculatedDate, isTop, sourceTagId)
 
             count += 1
         }
 
-        return count
+        return Pair(count, isBreak)
     }
 
-    private fun saveInstaMediaByTag(media: EdgeItem, instaAccount: InstaAccount, calculatedDate: Timestamp, isTop: Boolean) {
+    private fun saveInstaMediaByTag(media: EdgeItem, instaAccount: InstaAccount, calculatedDate: Timestamp, isTop: Boolean, sourceTagId: Long) {
         var instaMediaByTag = instaMediaByTagRepository.findByInstaMediaId(media.id)
         if (instaMediaByTag == null) {
             instaMediaByTag = instaMediaByTagRepository.save(InstaMediaByTag(shortCode = media.shortcode,
@@ -208,7 +223,9 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
                 imageUrl = media.displayUrl,
                 instaType = media.__typename,
                 isTop = isTop,
-                instaCreatedDate = Timestamp(media.takenAtTimestamp.time * 1000)))
+                instaCreatedDate = Timestamp(media.takenAtTimestamp.time * 1000),
+                sourceTagId = sourceTagId
+            ))
 
             // TAG 처리는 여기서...
             if (media.edgeMediaToCaption.edges.isNotEmpty()) {

@@ -55,8 +55,11 @@ data class InstaMediaByTag(
     val instaCreatedDate: Timestamp,
 
     @Column(name = "created_date", nullable = false)
-    val createdDate: Timestamp
+    val createdDate: Timestamp,
+
+    @Column(name = "source_tag_id")
+    val sourceTagId: Long?
 ) {
-    constructor(shortCode: String, instaMediaId: String, userId: Long, imageUrl: String, instaType: String, isTop: Boolean, instaCreatedDate: Timestamp)
-        : this(null, shortCode, instaMediaId, userId, imageUrl, instaType, isTop, instaCreatedDate, Timestamp(System.currentTimeMillis()))
+    constructor(shortCode: String, instaMediaId: String, userId: Long, imageUrl: String, instaType: String, isTop: Boolean, instaCreatedDate: Timestamp, sourceTagId: Long?)
+        : this(null, shortCode, instaMediaId, userId, imageUrl, instaType, isTop, instaCreatedDate, Timestamp(System.currentTimeMillis()), sourceTagId)
 }
