@@ -33,18 +33,18 @@
         </rollingPolicy>
     </appender>
 
-    <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>54.180.119.226:8094</destination>
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-<!--            <jsonGeneratorDecorator class="me.danny.instacrawlerkotlin.utils.logback.PrettyPrintingDecorator"/>-->
-<!--            <jsonFactoryDecorator class="me.danny.instacrawlerkotlin.utils.logback.ISO8601DateDecorator"/>-->
-        </encoder>
-    </appender>
+<!--    <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+<!--        <destination>54.180.119.226:8094</destination>-->
+<!--        <encoder class="net.logstash.logback.encoder.LogstashEncoder">-->
+<!--&lt;!&ndash;            <jsonGeneratorDecorator class="me.danny.instacrawlerkotlin.utils.logback.PrettyPrintingDecorator"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            <jsonFactoryDecorator class="me.danny.instacrawlerkotlin.utils.logback.ISO8601DateDecorator"/>&ndash;&gt;-->
+<!--        </encoder>-->
+<!--    </appender>-->
 
     <logger name="insta"  level="debug" additivity="false">
         <appender-ref ref="JSON_FILE"/>
         <appender-ref ref="TEXT_CONSOLE"/>
-        <appender-ref ref="stash" />
+<!--        <appender-ref ref="stash" />-->
     </logger>
 
 

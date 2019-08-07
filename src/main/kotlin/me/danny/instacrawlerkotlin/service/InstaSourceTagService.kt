@@ -24,6 +24,10 @@ import reactor.core.scheduler.Schedulers
 import reactor.util.function.Tuples
 import java.sql.Timestamp
 import javax.transaction.Transactional
+import java.text.SimpleDateFormat
+import java.text.DateFormat
+
+
 
 
 /**
@@ -169,8 +173,15 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
 
     private fun saveInstaMedias(medias: List<Edge>, calculatedDate: Timestamp, isTop: Boolean): Int {
         var count = 0;
+        val limitDateTime = "2019-05-01 00:00:00.0" // 형식을 지켜야 함
+        val limitDateTimeStamp = java.sql.Timestamp.valueOf(limitDateTime)
+
 
         for (item in medias) {
+            if(item.node.takenAtTimestamp.time * 1000 < limitDateTimeStamp.time) {
+                continue
+            }
+
             var instaAccount = instaAccountService.isNeedInstaAccount(item.node.owner.id, calculatedDate)
             if (instaAccount == null) {
                 val instaUser = instaAccountService.getInstaAccountById(ownerId = item.node.owner.id)

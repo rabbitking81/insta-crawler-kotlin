@@ -131,7 +131,7 @@ class InstaAccountService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaRepositor
         val instaAccount = instaRepository.findByInstaAccountId(ownerId.toLong()) ?: return null
 
         instaAccountDetailRepository.findByInstaAccountIdAndCalculated(instaAccount.id!!, calculatedDate)
-            ?: return instaAccount
+            ?: return null
 
         return instaAccount
     }
