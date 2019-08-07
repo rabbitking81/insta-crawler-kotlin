@@ -16,4 +16,7 @@ import org.springframework.data.repository.query.Param
 interface InstaRepository : JpaRepository<InstaAccount, Long> {
     @Query(value = "select * from insta_account where insta_account_id = :instaAccountId", nativeQuery = true)
     fun findByInstaAccountId(@Param(value = "instaAccountId") instaAccountId: Long): InstaAccount?
+
+    @Query(value = "select * from insta_account where country = 'jp' and status = 'READY'", nativeQuery = true)
+    fun findByInstaAccountJP(): List<InstaAccount>
 }

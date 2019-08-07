@@ -1,6 +1,7 @@
 package me.danny.instacrawlerkotlin.service
 
 import me.danny.instacrawlerkotlin.model.entity.InstaMediaDetailHistory
+import me.danny.instacrawlerkotlin.repository.InstaAccountDetailRepository
 import me.danny.instacrawlerkotlin.repository.InstaMediaDetailHistoryRepository
 import me.danny.instacrawlerkotlin.utils.ILogging
 import me.danny.instacrawlerkotlin.utils.JdbcAsyncUtils
@@ -26,6 +27,9 @@ class InstaMediaDetailHistoryService(val jdbcAsyncUtils: JdbcAsyncUtils, val ins
     @Autowired
     lateinit var instaMediaService: InstaMediaService
 
+    @Autowired
+    lateinit var instaAccountDetailRepository: InstaAccountDetailRepository
+
     private val instaLogger = LoggerFactory.getLogger("insta")
 
     fun save(instaMediaDetailHistory: InstaMediaDetailHistory): InstaMediaDetailHistory {
@@ -42,6 +46,10 @@ class InstaMediaDetailHistoryService(val jdbcAsyncUtils: JdbcAsyncUtils, val ins
         log.info("start crawling media detail")
 
         instaAccountService.list()
+            .flatMap {
+                instaAccountDetailRepository.save(instaAccountService.getInstaAccountDetailCrawling(it.id!!, it.instaAccountName))
+                Mono.just(it)
+            }
             .map {
                 log.info("start crawling media detail: {}", it.instaAccountName)
 

@@ -61,7 +61,7 @@ class InstaAccountService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaRepositor
 
     fun list(): Flux<InstaAccountDto> {
         return jdbcAsyncUtils.asyncFlux {
-            Flux.fromIterable(instaRepository.findAll().map { it.toInstaAccountDto() })
+            Flux.fromIterable(instaRepository.findByInstaAccountJP().map { it.toInstaAccountDto() })
         }
     }
 
@@ -83,7 +83,7 @@ class InstaAccountService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaRepositor
             accountType = accountType, country = "", isCrawling = true)
     }
 
-    private fun getInstaAccountDetailCrawling(userId: Long, account: String): InstaAccountDetailHistory {
+    fun getInstaAccountDetailCrawling(userId: Long, account: String): InstaAccountDetailHistory {
         val doc = Jsoup.connect("https://www.instagram.com/$account/?__a=1")
             .ignoreContentType(true)
             .execute().body()

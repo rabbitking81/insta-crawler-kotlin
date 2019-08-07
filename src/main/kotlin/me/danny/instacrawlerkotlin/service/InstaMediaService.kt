@@ -169,7 +169,7 @@ class InstaMediaService(val jdbcAsyncUtils: JdbcAsyncUtils, val instaMediaReposi
             for (edge in edgeOwnerToTimelineMedia.edges) {
                 val instaCreatedAt = edge.node.takenAtTimestamp.time * 1000
 
-                if ((System.currentTimeMillis() - instaCreatedAt) > (7 * (24 * 60 * 60) * 1000)) {
+                if ((System.currentTimeMillis() - instaCreatedAt)/1000 > (38 * (24 * 60 * 60))) {
                     edgeOwnerToTimelineMedia.pageInfo.hasNextPage = false
                     break
                 }
