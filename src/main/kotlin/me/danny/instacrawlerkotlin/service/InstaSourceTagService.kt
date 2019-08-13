@@ -112,7 +112,7 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
     private fun getEdgeOwnerToTimelineMediaByTag(tagName: String, endCursor: String? = null): Pair<EdgeOwnerToTimelineMedia, EdgeHashTagToTopPosts?> {
         val objectMapper = jacksonObjectMapper()
         val includeTop: Boolean = (endCursor == null)
-
+/*
         val url =
             if (endCursor != null) {
                 "{\"tag_name\":\"$tagName\",\"first\":0,\"after\":\"$endCursor\"}"
@@ -127,20 +127,29 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
             .queryParam("query_hash", "f92f56d47dc7a55b606908374b43a314")
             .queryParam("variables", "{variables}")
             .build(url)
+*/
+        var url = "https://www.instagram.com/explore/tags/$tagName/?__a=1"
+        if (endCursor != null) {
+            url = "$url&max_id=$endCursor"
+        }
 
-        val doc = client.get().uri(uri).retrieve().bodyToMono(String::class.java).block()
+        log.info("insta media url: {}", url)
+
+        val doc = webClientBuilder.build().get().uri(url).retrieve().bodyToMono(String::class.java).block()
+//
+//        val doc = client.get().uri(uri).retrieve().bodyToMono(String::class.java).block()
 
         var top: EdgeHashTagToTopPosts? = null
         if (includeTop)
             top = getTopMedia(doc)
 
-        val media: EdgeOwnerToTimelineMedia = objectMapper.readValue(objectMapper.readTree(doc).get("data").get("hashtag").get("edge_hashtag_to_media").toString())
+        val media: EdgeOwnerToTimelineMedia = objectMapper.readValue(objectMapper.readTree(doc).get("graphql").get("hashtag").get("edge_hashtag_to_media").toString())
         return Pair(media, top)
     }
 
     private fun getTopMedia(doc: String?): EdgeHashTagToTopPosts {
         val objectMapper = jacksonObjectMapper()
-        return objectMapper.readValue(objectMapper.readTree(doc).get("data").get("hashtag").get("edge_hashtag_to_top_posts").toString())
+        return objectMapper.readValue(objectMapper.readTree(doc).get("graphql").get("hashtag").get("edge_hashtag_to_top_posts").toString())
     }
 
     @Transactional
@@ -179,13 +188,13 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
 
     private fun saveInstaMedias(medias: List<Edge>, calculatedDate: Timestamp, isTop: Boolean, sourceTagId: Long): Pair<Int, Boolean> {
         var count = 0;
-        val limitDateTime = "2019-06-01 00:00:00.0" // 형식을 지켜야 함
+        val limitDateTime = "2017-12-31 00:00:00.0" // 형식을 지켜야 함
         val limitDateTimeStamp = java.sql.Timestamp.valueOf(limitDateTime)
         var failedCount = 0
         var isBreak: Boolean = false
 
         for (item in medias) {
-            if (failedCount > 5) {
+            if (failedCount > 30) {
                 isBreak = true
                 break
             }
@@ -197,16 +206,16 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
                 failedCount = 0
             }
 
-            var instaAccount = instaAccountService.isNeedInstaAccount(item.node.owner.id, calculatedDate)
-            if (instaAccount == null) {
-                val instaUser = instaAccountService.getInstaAccountById(ownerId = item.node.owner.id)
-                instaAccount = instaAccountService.getUserAndSave(instaUser, calculatedDate)
-
-                Thread.sleep(randomRange(5, 9) * 1000L)
-            }
+//            var instaAccount = instaAccountService.isNeedInstaAccount(item.node.owner.id, calculatedDate)
+//            if (instaAccount == null) {
+//                val instaUser = instaAccountService.getInstaAccountById(ownerId = item.node.owner.id)
+//                instaAccount = instaAccountService.getUserAndSave(instaUser, calculatedDate)
+//
+//                Thread.sleep(randomRange(5, 9) * 1000L)
+//            }
 
             // 미디어
-            saveInstaMediaByTag(item.node, instaAccount, calculatedDate, isTop, sourceTagId)
+            saveInstaMediaByTag(item.node, calculatedDate, isTop, sourceTagId)
 
             count += 1
         }
@@ -214,12 +223,12 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
         return Pair(count, isBreak)
     }
 
-    private fun saveInstaMediaByTag(media: EdgeItem, instaAccount: InstaAccount, calculatedDate: Timestamp, isTop: Boolean, sourceTagId: Long) {
+    private fun saveInstaMediaByTag(media: EdgeItem, calculatedDate: Timestamp, isTop: Boolean, sourceTagId: Long) {
         var instaMediaByTag = instaMediaByTagRepository.findByInstaMediaId(media.id)
         if (instaMediaByTag == null) {
             instaMediaByTag = instaMediaByTagRepository.save(InstaMediaByTag(shortCode = media.shortcode,
                 instaMediaId = media.id,
-                userId = instaAccount.id!!,
+                userId = media.owner.id.toLong(),
                 imageUrl = media.displayUrl,
                 instaType = media.__typename,
                 isTop = isTop,
