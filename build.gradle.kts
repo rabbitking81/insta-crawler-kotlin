@@ -64,6 +64,7 @@ dependencies {
     testImplementation("io.projectreactor:reactor-test")
     implementation("org.jsoup:jsoup:1.12.1")
     implementation("net.logstash.logback:logstash-logback-encoder:+")
+    implementation("org.brunocvcunha.instagram4j:instagram4j:1.12")
 }
 
 tasks.withType<KotlinCompile> {

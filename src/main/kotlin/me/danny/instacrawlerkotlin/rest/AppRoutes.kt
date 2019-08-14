@@ -21,6 +21,7 @@ class AppRoutes {
                 GET("/find", apiHandler::findInstaAccount)
                 POST("/", apiHandler::addInstaAccount)
                 GET("/", apiHandler::list)
+                POST("/gelato", apiHandler::crawlingForGelatoInstaAccount)
             }
 
             "/insta/media".nest {

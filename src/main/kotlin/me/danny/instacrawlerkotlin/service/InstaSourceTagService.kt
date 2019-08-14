@@ -15,8 +15,6 @@ import me.danny.instacrawlerkotlin.utils.LoggingImp
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
-import org.springframework.web.util.DefaultUriBuilderFactory
-import org.springframework.web.util.DefaultUriBuilderFactory.EncodingMode
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.publisher.toFlux
@@ -68,14 +66,14 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
 
         return getSourceTagList().flatMap { t: InstaSourceTag ->
             mInstaSourceTag = t
-            t.endCursor = null
             t.status = "DOING"
+            t.endCursor = null
             instaSourceTagRepository.save(t)
             instaSourceTagHistory = instaSourceTagHistoryRepository.save(InstaSourceTagHistory(t.id!!))
             Mono.just(Tuples.of(t, instaSourceTagHistory!!))
         }.flatMap {
             // loop 을 돌면서 해당 태그에 해당하는 디자인을 다 긁어온다.
-            val totalCount = getInstaMediaByTag(it.t1.name, it.t2.start_at, it.t1.id!!)
+            val totalCount = getInstaMediaByTag(it.t1.name, it.t2.start_at, it.t1.id!!, it.t1.endCursor)
             it.t2.cnt = totalCount
 
             Mono.just(it)
@@ -153,15 +151,19 @@ class InstaSourceTagService(val jdbcAsyncUtils: JdbcAsyncUtils,
     }
 
     @Transactional
-    fun getInstaMediaByTag(tagName: String, calculatedDate: Timestamp, sourceTagId: Long): Int {
+    fun getInstaMediaByTag(tagName: String, calculatedDate: Timestamp, sourceTagId: Long, endCursor: String?): Int {
         var totalCount = 0
         var edgeOwnerToTimelineMedia: EdgeOwnerToTimelineMedia? = null
         var isBreak = false
+        var isFirst = true
 
         try {
             do {
-                val instaMedias = getEdgeOwnerToTimelineMediaByTag(tagName, edgeOwnerToTimelineMedia?.pageInfo?.endCursor)
+                val instaMedias = getEdgeOwnerToTimelineMediaByTag(tagName,
+                    if (isFirst) endCursor else edgeOwnerToTimelineMedia?.pageInfo?.endCursor)
                 edgeOwnerToTimelineMedia = instaMedias.first
+
+                isFirst = false
 
                 instaMedias.second?.let {
                     val pairResultTop = saveInstaMedias(it.edges, calculatedDate, true, sourceTagId)

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import me.danny.instacrawlerkotlin.model.entity.InstaMediaDetailHistory
 import me.danny.instacrawlerkotlin.utils.ILogging
 import me.danny.instacrawlerkotlin.utils.LoggingImp
+import me.danny.instacrawlerkotlin.utils.getInstagramPostId
+import org.brunocvcunha.instagram4j.requests.InstagramGetUserReelMediaFeedRequest
+import org.brunocvcunha.instagram4j.requests.payload.InstagramUserReelMediaFeedResult
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.ApplicationArguments
@@ -46,9 +49,13 @@ class ServiceApplicationRunner : ApplicationRunner, ILogging by LoggingImp<Servi
             info("START APPLICATION")
             info("UTC TIME : $utcLocalTime" + " = ${Timestamp.valueOf(utcLocalTime).time}")
             info("KST TIME : ${koZoneId.toLocalDateTime()}")
+            info("----" + getInstagramPostId("2061032530567649687"))
+            info("----" + getInstagramPostId("2062506575096037653_2062506559954640850"))
             info("===============================================")
         }
 
+
+        InstagramUserReelMediaFeedResult
         servlet?.setThrowExceptionIfNoHandlerFound(true)
     }
 }

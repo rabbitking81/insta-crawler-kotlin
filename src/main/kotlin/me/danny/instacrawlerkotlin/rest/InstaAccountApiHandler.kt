@@ -2,6 +2,7 @@ package me.danny.instacrawlerkotlin.rest
 
 import me.danny.instacrawlerkotlin.model.dto.InstaAccountDto
 import me.danny.instacrawlerkotlin.model.form.InstaAccountForm
+import me.danny.instacrawlerkotlin.service.GelatoInstaAccountService
 import me.danny.instacrawlerkotlin.service.InstaAccountService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -23,6 +24,9 @@ class InstaAccountApiHandler {
     @Autowired
     lateinit var instaAccountService: InstaAccountService
 
+    @Autowired
+    lateinit var gelatoInstaAccountService: GelatoInstaAccountService
+
     fun findInstaAccount(request: ServerRequest): Mono<ServerResponse> {
         val account = request.queryParam("account").get()
         val accountType = request.queryParam("accountType").get().toInt()
@@ -41,5 +45,10 @@ class InstaAccountApiHandler {
     fun list(request: ServerRequest): Mono<ServerResponse> {
         return ok().json()
             .body(instaAccountService.list(), InstaAccountDto::class.java)
+    }
+
+    fun crawlingForGelatoInstaAccount(request: ServerRequest) : Mono<ServerResponse>{
+        gelatoInstaAccountService.startCrawling()
+        return ok().json().build()
     }
 }
