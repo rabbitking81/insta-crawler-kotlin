@@ -15,13 +15,12 @@ import org.springframework.web.reactive.function.server.router
 @Configuration
 class AppRoutes {
     @Bean
-    fun apiRouter(apiHandler: InstaAccountApiHandler, instaMediaCrawlingApiHandler: InstaMediaCrawlingApiHandler) = router {
+    fun apiRouter(apiHandler: InstaAccountApiHandler, instaMediaCrawlingApiHandler: InstaMediaCrawlingApiHandler, gelatoInstaApiHandler: GelatoInstaApiHandler) = router {
         (accept(MediaType.APPLICATION_JSON_UTF8) and "/api").nest {
             "/insta/account".nest {
                 GET("/find", apiHandler::findInstaAccount)
                 POST("/", apiHandler::addInstaAccount)
                 GET("/", apiHandler::list)
-                POST("/gelato", apiHandler::crawlingForGelatoInstaAccount)
             }
 
             "/insta/media".nest {
@@ -32,6 +31,11 @@ class AppRoutes {
 
             "/insta/tag".nest {
                 GET("/crawling", instaMediaCrawlingApiHandler::testCrawlingByTag)
+            }
+
+            "/gelato/insta".nest {
+                POST("/media", gelatoInstaApiHandler::crawlingForGelatoInstaMedia)
+                POST("/account/media", gelatoInstaApiHandler::crawlingForGelatoInstaAccount)
             }
         }
     }

@@ -1,13 +1,24 @@
 package me.danny.instacrawlerkotlin.service
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import me.danny.instacrawlerkotlin.model.Edge
+import me.danny.instacrawlerkotlin.model.EdgeOwnerToTimelineMedia
+import me.danny.instacrawlerkotlin.model.entity.GelatoInstaAccountBulk
+import me.danny.instacrawlerkotlin.model.entity.InstaAccount
+import me.danny.instacrawlerkotlin.repository.GelatoInstaAccountBulkRepository
 import me.danny.instacrawlerkotlin.repository.GelatoInstaAccountRepository
+import me.danny.instacrawlerkotlin.repository.GelatoInstaMediaBulkRepository
+import me.danny.instacrawlerkotlin.utils.getInstagramPostId
 import org.jsoup.Jsoup
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
+import org.springframework.web.reactive.function.client.WebClient
+import reactor.core.publisher.Mono
 import reactor.util.function.Tuple3
 import reactor.util.function.Tuples
+import java.sql.Timestamp
 
 /**
  *
@@ -19,38 +30,93 @@ import reactor.util.function.Tuples
 @Service
 class GelatoInstaAccountService {
     @Autowired
-    private lateinit var gelatoInstaAccountRepository: GelatoInstaAccountRepository
+    private lateinit var gelatoInstaAccountBulkRepository: GelatoInstaAccountBulkRepository
+
+    @Autowired
+    private lateinit var gelatoInstaMediaBulkRepository : GelatoInstaMediaBulkRepository
+    @Autowired
+    lateinit var webClientBuilder: WebClient.Builder
 
     @Async
     fun startCrawling() {
         while (true) {
-            val targetAccount = gelatoInstaAccountRepository.findByIsCrawlingTrue() ?: break
+            val targetAccount = gelatoInstaAccountBulkRepository.findByIsCrawlingTrue() ?: break
+            // READY
+            targetAccount.result = "DOING"
+            gelatoInstaAccountBulkRepository.save(targetAccount)
 
-            val instaCount = getInstaAccountDetailCrawling(targetAccount.accountName)
-            targetAccount.instaFollowedByCount = instaCount.t1
-            targetAccount.instaFollowsCount = instaCount.t2
-            targetAccount.instaMediaCount = instaCount.t3
-            targetAccount.isInstaCrawling = true
-
-            gelatoInstaAccountRepository.save(targetAccount)
-
-            Thread.sleep(randomRange(5, 9) * 1000L)
+            try {
+                // DOING
+                getMediaFromInsta(targetAccount)
+                targetAccount.isInstaCrawling = true
+                targetAccount.result = "DONE"
+                gelatoInstaAccountBulkRepository.save(targetAccount)
+            } catch (e: Exception) {
+                targetAccount.result = "FAILED"
+                gelatoInstaAccountBulkRepository.save(targetAccount)
+            }
         }
     }
 
-    private fun getInstaAccountDetailCrawling(accountName: String): Tuple3<Int, Int, Int> {
-        val doc = Jsoup.connect("https://www.instagram.com/$accountName/?__a=1")
-            .ignoreContentType(true)
-            .execute().body()
+    private fun getMediaFromInsta(targetAccount: GelatoInstaAccountBulk) {
+        var edgeOwnerToTimelineMedia: EdgeOwnerToTimelineMedia? = null
 
-        val mapper = jacksonObjectMapper()
-        val result = mapper.readTree(doc).get("graphql").get("user")
+        do {
+            edgeOwnerToTimelineMedia = getEdgeOwnerToTimelineMedia(targetAccount.accountId, edgeOwnerToTimelineMedia?.pageInfo?.endCursor)
+            targetAccount.endCursor = edgeOwnerToTimelineMedia.pageInfo.endCursor
+            gelatoInstaAccountBulkRepository.save(targetAccount)
 
-        val followedCount = result.get("edge_followed_by").get("count").asInt()
-        val followCount = result.get("edge_follow").get("count").asInt()
-        val mediaCount = result.get("edge_owner_to_timeline_media").get("count").asInt()
+            if (!saveInstaMedia(edgeOwnerToTimelineMedia.edges)) {
+                edgeOwnerToTimelineMedia.pageInfo.hasNextPage = false
+            }
 
-        return Tuples.of(followedCount, followCount, mediaCount)
+            Thread.sleep(randomRange(5, 7) * 1000L)
+        } while (edgeOwnerToTimelineMedia?.pageInfo?.hasNextPage ?: run { false })
+    }
+
+    private fun saveInstaMedia(edges: List<Edge>): Boolean {
+        val limitDateTime = "2018-08-29 00:00:00.0" // 형식을 지켜야 함
+        val limitDateTimeStamp = java.sql.Timestamp.valueOf(limitDateTime)
+
+        val startDateTime = "2018-08-30 00:00:00.0" // 형식을 지켜야 함
+        val endDateTime = "2018-11-02 00:00:00.0" // 형식을 지켜야 함
+        val startDateTimeStamp = java.sql.Timestamp.valueOf(startDateTime)
+        val endDateTimeStamp = java.sql.Timestamp.valueOf(endDateTime)
+
+        for (edge in edges) {
+            val currentTime = edge.node.takenAtTimestamp.time * 1000
+            if (limitDateTimeStamp.time >= currentTime ) {
+                return false
+            }
+
+            if(startDateTimeStamp.time < currentTime && endDateTimeStamp.time > currentTime) {
+                val targetMedia = gelatoInstaMediaBulkRepository.findByContentId(edge.node.id)
+                if(targetMedia != null) {
+                    targetMedia.isCrawling = true
+                    targetMedia.instaCrawlingDate = Timestamp(System.currentTimeMillis())
+                    targetMedia.instaCreatedDate = Timestamp(currentTime)
+                    targetMedia.instaLikeCount = edge.node.edgeMediaPreviewLike.count.toInt()
+                    targetMedia.instaCommentCount = edge.node.edgeMediaToComment.count.toInt()
+                    targetMedia.imageUrl = edge.node.displayUrl
+                    targetMedia.instaMediaId = edge.node.id
+
+                    gelatoInstaMediaBulkRepository.save(targetMedia)
+                }
+            }
+        }
+
+        return true
+    }
+
+    private fun getEdgeOwnerToTimelineMedia(accountId: String, endCursor: String? = null): EdgeOwnerToTimelineMedia {
+        val objectMapper = jacksonObjectMapper()
+        var url = "https://www.instagram.com/graphql/query/?query_id=17888483320059182&id=$accountId&first=50"
+        if (endCursor != null) {
+            url = "$url&after=$endCursor"
+        }
+
+        val doc = webClientBuilder.build().get().uri(url).retrieve().bodyToMono(String::class.java).block()
+        return objectMapper.readValue(objectMapper.readTree(doc).get("data").get("user").get("edge_owner_to_timeline_media").toString())
     }
 
     private fun randomRange(n1: Int, n2: Int): Int {

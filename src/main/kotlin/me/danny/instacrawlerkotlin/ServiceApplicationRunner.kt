@@ -5,8 +5,6 @@ import me.danny.instacrawlerkotlin.model.entity.InstaMediaDetailHistory
 import me.danny.instacrawlerkotlin.utils.ILogging
 import me.danny.instacrawlerkotlin.utils.LoggingImp
 import me.danny.instacrawlerkotlin.utils.getInstagramPostId
-import org.brunocvcunha.instagram4j.requests.InstagramGetUserReelMediaFeedRequest
-import org.brunocvcunha.instagram4j.requests.payload.InstagramUserReelMediaFeedResult
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.ApplicationArguments
@@ -44,6 +42,13 @@ class ServiceApplicationRunner : ApplicationRunner, ILogging by LoggingImp<Servi
         val utcLocalTime = utcZoned.toLocalDateTime()
         val isProduction = environment.activeProfiles.contains("prod")
 
+        val limitDateTime = "2018-08-31 00:00:00.0" // 형식을 지켜야 함
+        val limitDateTimeStamp = java.sql.Timestamp.valueOf(limitDateTime)
+        val startDateTime = "2018-09-01 00:00:00.0" // 형식을 지켜야 함
+        val endDateTime = "2018-11-01 00:00:00.0" // 형식을 지켜야 함
+        val startDateTimeStamp = java.sql.Timestamp.valueOf(startDateTime)
+        val endDateTimeStamp = java.sql.Timestamp.valueOf(endDateTime)
+
         log.run {
             info("===============================================")
             info("START APPLICATION")
@@ -51,11 +56,11 @@ class ServiceApplicationRunner : ApplicationRunner, ILogging by LoggingImp<Servi
             info("KST TIME : ${koZoneId.toLocalDateTime()}")
             info("----" + getInstagramPostId("2061032530567649687"))
             info("----" + getInstagramPostId("2062506575096037653_2062506559954640850"))
+            info("start" + startDateTimeStamp.time)
+            info("end" + endDateTimeStamp.time)
             info("===============================================")
         }
 
-
-        InstagramUserReelMediaFeedResult
         servlet?.setThrowExceptionIfNoHandlerFound(true)
     }
 }

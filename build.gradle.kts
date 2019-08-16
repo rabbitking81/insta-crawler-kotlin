@@ -22,7 +22,7 @@ plugins {
 }
 
 group = "me.danny"
-version = "0.0.3-SNAPSHOT"
+version = "0.0.4-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
@@ -64,7 +64,7 @@ dependencies {
     testImplementation("io.projectreactor:reactor-test")
     implementation("org.jsoup:jsoup:1.12.1")
     implementation("net.logstash.logback:logstash-logback-encoder:+")
-    implementation("org.brunocvcunha.instagram4j:instagram4j:1.12")
+
 }
 
 tasks.withType<KotlinCompile> {

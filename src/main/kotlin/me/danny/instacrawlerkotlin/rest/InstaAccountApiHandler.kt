@@ -24,9 +24,6 @@ class InstaAccountApiHandler {
     @Autowired
     lateinit var instaAccountService: InstaAccountService
 
-    @Autowired
-    lateinit var gelatoInstaAccountService: GelatoInstaAccountService
-
     fun findInstaAccount(request: ServerRequest): Mono<ServerResponse> {
         val account = request.queryParam("account").get()
         val accountType = request.queryParam("accountType").get().toInt()
@@ -45,10 +42,5 @@ class InstaAccountApiHandler {
     fun list(request: ServerRequest): Mono<ServerResponse> {
         return ok().json()
             .body(instaAccountService.list(), InstaAccountDto::class.java)
-    }
-
-    fun crawlingForGelatoInstaAccount(request: ServerRequest) : Mono<ServerResponse>{
-        gelatoInstaAccountService.startCrawling()
-        return ok().json().build()
     }
 }
